@@ -29,7 +29,7 @@
                 </div>
                 <!--       内容栏            -->
                 <div class="row">
-                    <div class="col-md-9" style="background-color: chartreuse">
+                    <div class="col-md-8" style="background-color: chartreuse">
                         内容栏
                         <MediaContent title="最新更新"/>
                         <MediaContent title="日本动漫"/>
@@ -37,7 +37,8 @@
                         <MediaContent title="美国动漫"/>
                         <MediaContent title="动漫电影"/>
                     </div>
-                    <div class="col-md-3" style="background-color: cornflowerblue">
+                    <div class="col-md-4" style="background-color: cornflowerblue">
+                        <DailyUpdateList/>
                         每日更新列表
                         一周动漫排行榜
                     </div>
@@ -53,11 +54,12 @@
     import Carousel from "../components/Carousel";
     import TagList from "../components/TagList";
     import MediaContent from "../components/MediaContent";
+    import DailyUpdateList from "../components/DailyUpdateList";
 
     export default {
         name: "Main",
         components: {
-            PageTop, Navigation, Carousel, TagList,MediaContent
+            PageTop, Navigation, Carousel, TagList, MediaContent,DailyUpdateList
         }
     }
 </script>

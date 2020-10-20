@@ -39,8 +39,7 @@
                     </div>
                     <div class="col-md-4" style="background-color: cornflowerblue">
                         <DailyUpdateList/>
-                        每日更新列表
-                        一周动漫排行榜
+                        <AnimeWeekRank/>
                     </div>
                 </div>
             </div>
@@ -55,11 +54,12 @@
     import TagList from "../components/TagList";
     import MediaContent from "../components/MediaContent";
     import DailyUpdateList from "../components/DailyUpdateList";
+    import AnimeWeekRank from "../components/AnimeWeekRank";
 
     export default {
         name: "Main",
         components: {
-            PageTop, Navigation, Carousel, TagList, MediaContent,DailyUpdateList
+            PageTop, Navigation, Carousel, TagList, MediaContent,DailyUpdateList,AnimeWeekRank
         }
     }
 </script>

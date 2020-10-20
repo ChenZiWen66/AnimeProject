@@ -1,4 +1,5 @@
 <template>
+    <!--  导航栏组件  -->
     <div class="row">
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -7,9 +8,9 @@
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                             data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                        <span class="icon-bar"/>
+                        <span class="icon-bar"/>
+                        <span class="icon-bar"/>
                     </button>
                     <a class="navbar-brand" href="#">首页</a>
                 </div>

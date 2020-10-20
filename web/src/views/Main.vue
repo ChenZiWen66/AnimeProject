@@ -18,7 +18,7 @@
                 <!--       轮播栏            -->
                 <div class="row">
                     <div class="col-md-12" style="background-color: cornsilk">
-                        轮播栏
+                        <Carousel/>
                     </div>
                 </div>
                 <!--       tag标签栏            -->
@@ -44,11 +44,12 @@
 <script>
     import PageTop from "../components/PageTop";
     import Navigation from "../components/Navigation";
+    import Carousel from "../components/Carousel";
 
     export default {
         name: "Main",
         components: {
-            PageTop, Navigation
+            PageTop, Navigation,Carousel
         }
     }
 </script>

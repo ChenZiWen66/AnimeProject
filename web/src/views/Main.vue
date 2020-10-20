@@ -3,16 +3,16 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <!--        顶部导航栏        -->
+                <!--        页面顶部       -->
                 <div class="row">
                     <div class="col-md-12" style="background-color: antiquewhite">
                         <PageTop/>
                     </div>
                 </div>
-                <!--       顶部标签栏         -->
+                <!--       顶部导航栏         -->
                 <div class="row">
                     <div class="col-md-12" style="background-color: #42b983">
-                        顶部标签
+                        <Navigation/>
                     </div>
                 </div>
                 <!--       轮播栏            -->
@@ -43,11 +43,12 @@
 
 <script>
     import PageTop from "../components/PageTop";
+    import Navigation from "../components/Navigation";
 
     export default {
         name: "Main",
         components: {
-            PageTop
+            PageTop, Navigation
         }
     }
 </script>

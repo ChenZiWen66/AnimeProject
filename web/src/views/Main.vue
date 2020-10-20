@@ -30,7 +30,6 @@
                 <!--       内容栏            -->
                 <div class="row">
                     <div class="col-md-8" style="background-color: chartreuse">
-                        内容栏
                         <MediaContent title="最新更新"/>
                         <MediaContent title="日本动漫"/>
                         <MediaContent title="国产动漫"/>

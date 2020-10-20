@@ -24,7 +24,7 @@
                 <!--       tag标签栏            -->
                 <div class="row">
                     <div class="col-md-12" style="background-color: aquamarine">
-                        标签栏
+                        <TagList/>
                     </div>
                 </div>
                 <!--       内容栏            -->
@@ -45,11 +45,12 @@
     import PageTop from "../components/PageTop";
     import Navigation from "../components/Navigation";
     import Carousel from "../components/Carousel";
+    import TagList from "../components/TagList";
 
     export default {
         name: "Main",
         components: {
-            PageTop, Navigation,Carousel
+            PageTop, Navigation, Carousel, TagList
         }
     }
 </script>

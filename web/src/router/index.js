@@ -2,8 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Main from "../views/Main";
+import AnimeView from "../views/AnimeView";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
     {
@@ -15,6 +16,11 @@ const routes = [
         path: '/main',
         name: 'Main',
         component: Main
+    },
+    {
+        path: '/View',
+        name: 'AnimeView',
+        component: AnimeView
     },
     {
         path: '/about',
@@ -30,6 +36,6 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes
-})
+});
 
 export default router

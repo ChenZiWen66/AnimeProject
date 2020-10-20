@@ -14,11 +14,8 @@
                 <div class="item active">
                     <div>
                         <img src="../assets/xiaolan.jpg" alt="../../public/xiaolan.jpg">
-
                         <img src="../assets/xiaolan.jpg" alt="../../public/xiaolan.jpg">
-
                         <img src="../assets/xiaolan.jpg" alt="../../public/xiaolan.jpg">
-
                     </div>
                     <div class="carousel-caption">
                         动漫名称1-1
@@ -27,11 +24,8 @@
                 <div class="item">
                     <div>
                         <img src="../assets/xiaolan.jpg" alt="../../public/xiaolan.jpg">
-
                         <img src="../assets/xiaolan.jpg" alt="../../public/xiaolan.jpg">
-
                         <img src="../assets/xiaolan.jpg" alt="../../public/xiaolan.jpg">
-
                     </div>
                     <div class="carousel-caption">
                         动漫名称2-2

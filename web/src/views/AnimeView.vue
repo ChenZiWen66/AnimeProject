@@ -17,11 +17,11 @@
                             </h1>
                         </div>
                     </div>
-                    <div class="col-md-8" style="background-color: chartreuse">
+                    <div class="col-md-8" >
                         <ViewLeftContent/>
                     </div>
                     <!-- 推荐动漫 -->
-                    <div class="col-md-4" style="background-color: coral">
+                    <div class="col-md-4">
                         <RecommendAnime/>
                     </div>
                 </div>

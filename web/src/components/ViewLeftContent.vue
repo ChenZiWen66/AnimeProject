@@ -36,26 +36,33 @@
 
         <!--     播放地址导航栏一      -->
         <div class="col-md-12">
-            相关系列介绍
-        </div>
-        <!--     播放列表      -->
-        <div class="col-md-12">
-            相关系列介绍
+            <AnimeAddressList/>
         </div>
         <!--     播放地址导航栏二      -->
-        <!--     播放列表      -->
         <div class="col-md-12">
-            相关系列介绍
+            <AnimeAddressList/>
         </div>
         <div class="col-md-12">
-            介绍
+            <RelativeAnime/>
+        </div>
+        <div class="col-md-12">
+            <AnimeDescribe/>
         </div>
     </div>
 </template>
 
 <script>
+    import AnimeAddressList from "./AnimeAddressList";
+    import RelativeAnime from "./RelativeAnime";
+    import AnimeDescribe from "./AnimeDescribe";
+
     export default {
-        name: "ViewLeftContent"
+        name: "ViewLeftContent",
+        components:{
+            AnimeDescribe,
+            RelativeAnime,
+            AnimeAddressList
+        }
     }
 </script>
 

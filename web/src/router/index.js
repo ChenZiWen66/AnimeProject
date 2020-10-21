@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Main from "../views/Main";
 import AnimeView from "../views/AnimeView";
+import AnimePlay from "../views/AnimePlay";
 
 Vue.use(VueRouter);
 
@@ -18,9 +19,14 @@ const routes = [
         component: Main
     },
     {
-        path: '/View',
+        path: '/view',
         name: 'AnimeView',
         component: AnimeView
+    },
+    {
+        path: '/player',
+        name: 'Play',
+        component: AnimePlay
     },
     {
         path: '/about',

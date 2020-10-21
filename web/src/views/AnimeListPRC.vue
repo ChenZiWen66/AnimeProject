@@ -1,5 +1,5 @@
 <template>
-<!--国产动漫界面-->
+    <!--国产动漫界面-->
     <div class="contain-fluid">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">

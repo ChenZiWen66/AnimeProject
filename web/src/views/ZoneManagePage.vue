@@ -6,21 +6,21 @@
                 <label>
                     左边是部分是一个纵向表，里面有已经存放到数据库的地区信息
                     <select multiple class="form-control zoneList">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                        <option>15</option>
+                        <option>地区1</option>
+                        <option>地区2</option>
+                        <option>地区3</option>
+                        <option>地区4</option>
+                        <option>地区5</option>
+                        <option>地区6</option>
+                        <option>地区7</option>
+                        <option>地区8</option>
+                        <option>地区9</option>
+                        <option>地区10</option>
+                        <option>地区11</option>
+                        <option>地区12</option>
+                        <option>地区13</option>
+                        <option>地区14</option>
+                        <option>地区15</option>
                     </select>
                 </label>
             </div>

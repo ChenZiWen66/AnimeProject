@@ -63,7 +63,7 @@
         data() {
             return {
                 mubiaobiaozhun: false,
-                mubiaokaohe:false
+                mubiaokaohe: false
             }
         },
         methods: {}
@@ -76,7 +76,7 @@
     }
 
     .LeftMenu a {
-        color:white;
+        color: white;
         background-color: #19233c;
     }
 
@@ -104,14 +104,29 @@
         background-color: #121A2C;
     }
 
-    .sub-comments-leave-active,.sub-comments-enter-active {
+    .nav > li > a:hover {
+        background-color: #121A2C;
+    }
+
+    .nav > li > a:focus {
+        background-color: #19233c;
+    }
+
+    a:hover, a:focus {
+        color: #309cff;
+    }
+
+
+    .sub-comments-leave-active, .sub-comments-enter-active {
         transition: max-height 0.5s linear;
     }
-    .sub-comments-enter,.sub-comments-leave-to {
-        max-height:0 ;
+
+    .sub-comments-enter, .sub-comments-leave-to {
+        max-height: 0;
         opacity: 0;
     }
-    .sub-comments-enter-to,.sub-comments-leave {
+
+    .sub-comments-enter-to, .sub-comments-leave {
         max-height: 136px;
     }
 </style>

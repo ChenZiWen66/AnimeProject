@@ -5,6 +5,7 @@ import Main from "../views/Main";
 import AnimeView from "../views/AnimeView";
 import AnimePlay from "../views/AnimePlay";
 import AnimeListPRC from "../views/AnimeListPRC";
+import ManagePage from "../views/ManagePage";
 
 Vue.use(VueRouter);
 
@@ -13,6 +14,11 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home
+    },
+    {
+        path: '/manage',
+        name: 'ManagePage',
+        component: ManagePage
     },
     {
         path: '/main',

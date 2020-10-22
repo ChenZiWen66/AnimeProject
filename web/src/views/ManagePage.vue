@@ -5,7 +5,7 @@
             <ManageTitle/>
         </div>
         <div class="row">
-            <div class="col-md-2" style="background-color: rgba(25, 35, 60, 1);height:559px">
+            <div class="col-md-2 leftMenu">
                 <LeftMenu/>
             </div>
             <div class="col-md-10">
@@ -21,7 +21,7 @@
 
     export default {
         name: "ManagePage",
-        components:{
+        components: {
             ManageTitle,
             LeftMenu
         }
@@ -29,5 +29,9 @@
 </script>
 
 <style scoped>
-
+    .leftMenu {
+        background-color: #121A2C;
+        height: 100vh;
+        padding: 0
+    }
 </style>

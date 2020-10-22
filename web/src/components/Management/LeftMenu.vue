@@ -1,25 +1,57 @@
 <template>
     <div class="col-md-12 LeftMenu">
         <ul class="nav nav-default nav-stacked">
+            <li role="presentation"><a href="#">总览</a></li>
             <li role="presentation">
-                <a href="#" class="dropdown-toggle" @click="profile_active = !profile_active">Profile</a>
+                <a href="#" class="dropdown-toggle" @click="mubiaobiaozhun = !mubiaobiaozhun">目标标准</a>
                 <transition name="sub-comments">
-                    <ul class="submenu" v-show="profile_active">
+                    <ul class="submenu" v-show="mubiaobiaozhun">
                         <li>
                             <a href="#">
-                                Simple &amp; Dynamic
+                                规划管理
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                jqGrid plugin
+                                指标库
                             </a>
                         </li>
                     </ul>
                 </transition>
             </li>
-            <li role="presentation"><a href="#">Profile</a></li>
-            <li role="presentation"><a href="#">Profile</a></li>
+            <li role="presentation"><a href="#">流程管理</a></li>
+            <li role="presentation">
+                <a href="#" class="dropdown-toggle" @click="mubiaokaohe = !mubiaokaohe">目标考核管理</a>
+                <transition name="sub-comments">
+                    <ul class="submenu" v-show="mubiaokaohe">
+                        <li>
+                            <a href="#">
+                                考核基础设置
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                考核体系与规划管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                目标考核
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                目标考核总览
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                服务基层测评
+                            </a>
+                        </li>
+                    </ul>
+                </transition>
+            </li>
         </ul>
 
     </div>
@@ -30,7 +62,8 @@
         name: "LeftMenu",
         data() {
             return {
-                profile_active: false
+                mubiaobiaozhun: false,
+                mubiaokaohe:false
             }
         },
         methods: {}
@@ -43,11 +76,13 @@
     }
 
     .LeftMenu a {
+        color:white;
         background-color: #19233c;
     }
 
     .LeftMenu li {
         list-style: none;
+        font-size: 14px;
     }
 
     .LeftMenu ul {
@@ -77,6 +112,6 @@
         opacity: 0;
     }
     .sub-comments-enter-to,.sub-comments-leave {
-        max-height: 136px ;
+        max-height: 136px;
     }
 </style>

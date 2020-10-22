@@ -8,8 +8,8 @@
             <div class="col-md-2 leftMenu">
                 <LeftMenu/>
             </div>
-            <div class="col-md-10">
-                右侧内容栏
+            <div class="col-md-10 rightContent">
+                <router-view/>
             </div>
         </div>
     </div>
@@ -33,5 +33,10 @@
         background-color: #121A2C;
         height: 100vh;
         padding: 0
+    }
+
+    .rightContent {
+        height: 100vh;
+        padding: 0;
     }
 </style>

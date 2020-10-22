@@ -3,50 +3,35 @@
         <ul class="nav nav-default nav-stacked">
             <li role="presentation"><a href="#">总览</a></li>
             <li role="presentation">
-                <a href="#" class="dropdown-toggle" @click="mubiaobiaozhun = !mubiaobiaozhun">目标标准</a>
+                <a href="#" class="dropdown-toggle" @click="animeManageActive = !animeManageActive">动漫管理</a>
                 <transition name="sub-comments">
-                    <ul class="submenu" v-show="mubiaobiaozhun">
+                    <ul class="submenu" v-show="animeManageActive">
                         <li>
-                            <a href="#">
-                                规划管理
+                            <a href="#" @click="$router.push('/manage/AnimeInfoManagement')">
+                                动漫信息管理
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                指标库
+                            <a href="#" @click="$router.push('/manage/UploadAnime')">
+                                上传动漫
                             </a>
                         </li>
                     </ul>
                 </transition>
             </li>
-            <li role="presentation"><a href="#">流程管理</a></li>
+            <li role="presentation"><a href="#">用户管理</a></li>
             <li role="presentation">
-                <a href="#" class="dropdown-toggle" @click="mubiaokaohe = !mubiaokaohe">目标考核管理</a>
+                <a href="#" class="dropdown-toggle" @click="tagManageActive = !tagManageActive">标签管理</a>
                 <transition name="sub-comments">
-                    <ul class="submenu" v-show="mubiaokaohe">
+                    <ul class="submenu" v-show="tagManageActive">
                         <li>
-                            <a href="#">
-                                考核基础设置
+                            <a href="#" @click="$router.push('/manage/ZoneManage')">
+                                地区设置
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                考核体系与规划管理
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                目标考核
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                目标考核总览
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                服务基层测评
+                            <a href="#" @click="$router.push('/manage/TypeManage')">
+                                分类设置
                             </a>
                         </li>
                     </ul>
@@ -62,8 +47,8 @@
         name: "LeftMenu",
         data() {
             return {
-                mubiaobiaozhun: false,
-                mubiaokaohe: false
+                animeManageActive: false,
+                tagManageActive: false
             }
         },
         methods: {}

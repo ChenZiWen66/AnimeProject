@@ -6,6 +6,10 @@ import AnimeView from "../views/AnimeView";
 import AnimePlay from "../views/AnimePlay";
 import AnimeListPRC from "../views/AnimeListPRC";
 import ManagePage from "../views/ManagePage";
+import AnimeInfoManagePage from "../views/AnimeInfoManagePage";
+import UploadAnimePage from "../views/UploadAnimePage";
+import ZoneManagePage from "../views/ZoneManagePage";
+import TypeMangePage from "../views/TypeMangePage";
 
 Vue.use(VueRouter);
 
@@ -18,7 +22,27 @@ const routes = [
     {
         path: '/manage',
         name: 'ManagePage',
-        component: ManagePage
+        component: ManagePage,
+        children: [
+            {
+                path: '/manage/AnimeInfoManagement',
+                name: 'AnimeInfoManagePage',
+                component: AnimeInfoManagePage
+            },
+            {
+                path: '/manage/UploadAnime',
+                name: 'UploadAnimePage',
+                component: UploadAnimePage
+            },{
+                path: '/manage/ZoneManage',
+                name: 'ZoneManagePage',
+                component: ZoneManagePage
+            },{
+                path: '/manage/TypeManage',
+                name: 'TypeManagePage',
+                component: TypeMangePage
+            },
+        ]
     },
     {
         path: '/main',
@@ -28,13 +52,14 @@ const routes = [
     {
         path: '/view',
         name: 'AnimeView',
-        component: AnimeView
+        component: AnimeView,
+
     },
     {
         path: '/player',
         name: 'Play',
         component: AnimePlay
-    },{
+    }, {
         path: '/List',
         name: 'List',
         component: AnimeListPRC

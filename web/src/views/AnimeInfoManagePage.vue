@@ -44,7 +44,9 @@
                         </form>
                         <form class="navbar-form navbar-right">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
+                                <label>
+                                    <input type="text" class="form-control" placeholder="Search">
+                                </label>
                             </div>
                             <button type="submit" class="btn btn-default">关键词搜索</button>
                         </form>
@@ -54,133 +56,39 @@
         </div>
         <!--中间的是信息栏-->
         <div class="row midContent">
-            <div class="col-md-3">
-                <div class="thumbnail">
-                    <img src="../assets/xiaolan.jpg" alt="动漫封面">
-                    <div class="caption">
-                        <div>
-                            <h4>《陈子文的一天》</h4>
-                        </div>
-                        <div>
-                            <label>
-                                一共6集
-                                <select multiple class="form-control">
-                                    <option>第1集</option>
-                                    <option>第2集</option>
-                                    <option>第3集</option>
-                                    <option>第4集</option>
-                                    <option>第5集</option>
-                                    <option>OVA</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div>
-                            <div class="btn-group btn-group-xs" role="group">
-                                <!--点击后弹出上传剧集的模态框，可以上传剧集-->
-                                <button type="button" class="btn btn-default">上传剧集</button>
-                                <!--点击后删除该动漫，以及它所有的剧集-->
-                                <button type="button" class="btn btn-default">删除动漫</button>
-                                <!--点击后弹出修改信息的模态框，可以修改信息-->
-                                <button type="button" class="btn btn-default">修改信息</button>
+            <div v-for="n in 4">
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <img src="../assets/xiaolan.jpg" alt="动漫封面">
+                        <div class="caption">
+                            <div>
+                                <h4>《陈子文的一天》</h4>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="thumbnail">
-                    <img src="../assets/xiaolan.jpg" alt="动漫封面">
-                    <div class="caption">
-                        <div>
-                            <h4>《陈子文的一天》</h4>
-                        </div>
-                        <div>
-                            <label>
-                                一共6集
-                                <select multiple class="form-control">
-                                    <option>第1集</option>
-                                    <option>第2集</option>
-                                    <option>第3集</option>
-                                    <option>第4集</option>
-                                    <option>第5集</option>
-                                    <option>OVA</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div>
-                            <div class="btn-group btn-group-xs" role="group">
-                                <!--点击后弹出上传剧集的模态框，可以上传剧集-->
-                                <button type="button" class="btn btn-default">上传剧集</button>
-                                <!--点击后删除该动漫，以及它所有的剧集-->
-                                <button type="button" class="btn btn-default">删除动漫</button>
-                                <!--点击后弹出修改信息的模态框，可以修改信息-->
-                                <button type="button" class="btn btn-default">修改信息</button>
+                            <div>
+                                <label>
+                                    一共6集
+                                    <select multiple class="form-control">
+                                        <option @dblclick="doubleClickChapter">第1集</option>
+                                        <option @dblclick="doubleClickChapter">第2集</option>
+                                        <option @dblclick="doubleClickChapter">第3集</option>
+                                        <option @dblclick="doubleClickChapter">第4集</option>
+                                        <option @dblclick="doubleClickChapter">第5集</option>
+                                        <option @dblclick="doubleClickChapter">OVA</option>
+                                    </select>
+                                </label>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="thumbnail">
-                    <img src="../assets/xiaolan.jpg" alt="动漫封面">
-                    <div class="caption">
-                        <div>
-                            <h4>《陈子文的一天》</h4>
-                        </div>
-                        <div>
-                            <label>
-                                一共6集
-                                <select multiple class="form-control">
-                                    <option>第1集</option>
-                                    <option>第2集</option>
-                                    <option>第3集</option>
-                                    <option>第4集</option>
-                                    <option>第5集</option>
-                                    <option>OVA</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div>
-                            <div class="btn-group btn-group-xs" role="group">
-                                <!--点击后弹出上传剧集的模态框，可以上传剧集-->
-                                <button type="button" class="btn btn-default">上传剧集</button>
-                                <!--点击后删除该动漫，以及它所有的剧集-->
-                                <button type="button" class="btn btn-default">删除动漫</button>
-                                <!--点击后弹出修改信息的模态框，可以修改信息-->
-                                <button type="button" class="btn btn-default">修改信息</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="thumbnail">
-                    <img src="../assets/xiaolan.jpg" alt="动漫封面">
-                    <div class="caption">
-                        <div>
-                            <h4>《陈子文的一天》</h4>
-                        </div>
-                        <div>
-                            <label>
-                                一共6集
-                                <select multiple class="form-control">
-                                    <option>第1集</option>
-                                    <option>第2集</option>
-                                    <option>第3集</option>
-                                    <option>第4集</option>
-                                    <option>第5集</option>
-                                    <option>OVA</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div>
-                            <div class="btn-group btn-group-xs" role="group">
-                                <!--点击后弹出上传剧集的模态框，可以上传剧集-->
-                                <button type="button" class="btn btn-default">上传剧集</button>
-                                <!--点击后删除该动漫，以及它所有的剧集-->
-                                <button type="button" class="btn btn-default">删除动漫</button>
-                                <!--点击后弹出修改信息的模态框，可以修改信息-->
-                                <button type="button" class="btn btn-default">修改信息</button>
+                            <div>
+                                <div class="btn-group btn-group-xs" role="group">
+                                    <!--点击后弹出上传剧集的模态框，可以上传剧集-->
+                                    <button type="button" class="btn btn-default" @click="clickUploadChapter">上传剧集
+                                    </button>
+                                    <!--点击后删除该动漫，以及它所有的剧集-->
+                                    <button type="button" class="btn btn-default" @click="clickDeleteAnimeInfo">删除动漫
+                                    </button>
+                                    <!--点击后弹出修改信息的模态框，可以修改信息-->
+                                    <button type="button" class="btn btn-default" @click="clickUpdateAnimeInfo">修改信息
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -193,16 +101,42 @@
                 <AnimeManagementPagination/>
             </div>
         </div>
+        <AnimeChapterUpdateModel/>
+        <AnimeChapterUploadModel/>
+        <UpdateAnimeInfoModel/>
     </div>
 </template>
 
 <script>
     import AnimeManagementPagination from "../components/Management/AnimeManagementPagination";
+    import AnimeChapterUpdateModel from "../components/Management/AnimeChapterUpdateModal";
+    import AnimeChapterUploadModel from "../components/Management/AnimeChapterUploadModal";
+    import UpdateAnimeInfoModel from "../components/Management/UpdateAnimeInfoModal";
 
     export default {
         name: "AnimeInfoManagePage",
         components: {
+            UpdateAnimeInfoModel,
+            AnimeChapterUploadModel,
+            AnimeChapterUpdateModel,
             AnimeManagementPagination
+        },
+        methods: {
+            doubleClickChapter() {
+                console.log("双击了剧集Chapter，将更新剧集信息");
+                $("#animeChapterUpdateModal").modal('show');
+            },
+            clickUploadChapter() {
+                console.log("点击了上传剧集的按钮，将更新剧集信息");
+                $("#animeChapterUploadModal").modal('show');
+            },
+            clickUpdateAnimeInfo() {
+                console.log("点击了更新动漫信息的按钮，将更新动漫信息");
+                $("#updateAnimeInfoModal").modal('show');
+            },
+            clickDeleteAnimeInfo() {
+                console.log("点击了删除动漫的按钮，将删除动漫，以及它所有剧集");
+            }
         }
     }
 </script>
@@ -217,7 +151,7 @@
         width: 200px;
     }
 
-    .thumbnail{
+    .thumbnail {
         background-color: cornsilk;
     }
 </style>

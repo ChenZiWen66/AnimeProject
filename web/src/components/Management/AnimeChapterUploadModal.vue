@@ -8,14 +8,14 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">上传章节</h4>
+                            <h4 class="modal-title" id="ModalTitleLabel_ChapterUpload">上传章节</h4>
                         </div>
                         <div class="modal-body">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="animeName" class="col-md-3 control-label">动漫名</label>
+                                    <label for="animeName_ChapterUpload" class="col-md-3 control-label">动漫名</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" id="animeName"
+                                        <input type="text" class="form-control" id="animeName_ChapterUpload"
                                                placeholder="陈子文的一天(以后显示动漫名)"
                                                disabled>
                                     </div>
@@ -23,9 +23,9 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="chapterName" class="col-md-3 control-label">章节名</label>
+                                    <label for="chapterName_ChapterUpload" class="col-md-3 control-label">章节名</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" id="chapterName" placeholder="请输入章节名">
+                                        <input type="text" class="form-control" id="chapterName_ChapterUpload" placeholder="请输入章节名">
                                     </div>
                                 </div>
                             </div>

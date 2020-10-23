@@ -7,30 +7,30 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">修改章节信息</h4>
+                        <h4 class="modal-title" id="ModalTitleLabel_ChapterUpdate">修改章节信息</h4>
                     </div>
                     <div class="modal-body">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="animeName" class="col-sm-3 control-label">动漫名</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="animeName" placeholder="陈子文的一天(以后显示动漫名)"
+                                <label for="animeName_ChapterUpdate" class="col-md-3 control-label">动漫名</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="animeName_ChapterUpdate" placeholder="陈子文的一天(以后显示动漫名)"
                                            disabled>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="chapterName" class="col-sm-3 control-label">章节名</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="chapterName" placeholder="原章节名">
+                                <label for="chapterName_ChapterUpdate" class="col-md-3 control-label">章节名</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="chapterName_ChapterUpdate" placeholder="原章节名">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="uploadChapterCover" class="col-md-3 control-label">封面路径</label>
-                                <div class="col-sm-9">
+                                <div class="col-md-9">
                                     <input type="file" id="uploadChapterCover">
                                 </div>
                                 <p class="help-block col-md-12">点击按钮修改章节封面</p>

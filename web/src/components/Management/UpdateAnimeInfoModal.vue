@@ -7,15 +7,15 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">修改动漫信息</h4>
+                        <h4 class="modal-title" id="ModalTitleLabel_UpdateInfo">修改动漫信息</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="animeName" class="col-md-3 control-label">动漫名</label>
+                                    <label for="animeName_UpdateAnimeInfo" class="col-md-3 control-label">动漫名</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" id="animeName" placeholder="请输入动漫名">
+                                        <input type="text" class="form-control" id="animeName_UpdateAnimeInfo" placeholder="请输入动漫名">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -161,7 +161,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <img src="../assets/xiaolan.jpg" alt="选择的图片" class="img-thumbnail coverImg">
+                                    <img src="../../assets/xiaolan.jpg" alt="选择的图片" class="img-thumbnail coverImg">
                                 </div>
                             </div>
                         </div>

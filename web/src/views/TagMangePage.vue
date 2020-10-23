@@ -4,23 +4,23 @@
             <div class="col-md-2" style="background-color: coral;height: 100vh"></div>
             <div class="col-md-5" style="background-color: aqua;height: 100vh">
                 <label>
-                    左边的部分是一个纵向表，里面有已经存放到数据库的类型信息
+                    左边的部分是一个纵向表，里面有已经存放到数据库的标签信息
                     <select multiple class="form-control typeList">
-                        <option>类型1</option>
-                        <option>类型2</option>
-                        <option>类型3</option>
-                        <option>类型4</option>
-                        <option>类型5</option>
-                        <option>类型6</option>
-                        <option>类型7</option>
-                        <option>类型8</option>
-                        <option>类型9</option>
-                        <option>类型10</option>
-                        <option>类型11</option>
-                        <option>类型12</option>
-                        <option>类型13</option>
-                        <option>类型14</option>
-                        <option>类型15</option>
+                        <option>标签1</option>
+                        <option>标签2</option>
+                        <option>标签3</option>
+                        <option>标签4</option>
+                        <option>标签5</option>
+                        <option>标签6</option>
+                        <option>标签7</option>
+                        <option>标签8</option>
+                        <option>标签9</option>
+                        <option>标签10</option>
+                        <option>标签11</option>
+                        <option>标签12</option>
+                        <option>标签13</option>
+                        <option>标签14</option>
+                        <option>标签15</option>
                     </select>
                 </label>
             </div>
@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="添加类型">
+                            <input type="text" class="form-control" placeholder="添加标签">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">添加</button>
                             </span>
@@ -40,7 +40,7 @@
                     <div class="col-md-12 blockRow"></div>
                     <div class="col-md-12">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="修改类型">
+                            <input type="text" class="form-control" placeholder="修改标签">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">修改</button>
                             </span>

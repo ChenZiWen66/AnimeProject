@@ -31,7 +31,12 @@
                         </li>
                         <li>
                             <a href="#" @click="$router.push('/manage/TypeManage')">
-                                分类设置
+                                类型设置
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" @click="$router.push('/manage/TagManage')">
+                                标签设置
                             </a>
                         </li>
                     </ul>

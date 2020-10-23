@@ -1,7 +1,7 @@
 <template>
     <div class="col-md-12 LeftMenu">
         <ul class="nav nav-default nav-stacked">
-            <li role="presentation"><a href="#">总览</a></li>
+            <li role="presentation"><a href="#" @click="$router.push('/manage/Statistics')">总览</a></li>
             <li role="presentation">
                 <a href="#" class="dropdown-toggle" @click="animeManageActive = !animeManageActive">动漫管理</a>
                 <transition name="sub-comments">

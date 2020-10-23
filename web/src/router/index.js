@@ -12,6 +12,7 @@ import ZoneManagePage from "../views/ZoneManagePage";
 import TypeMangePage from "../views/TypeMangePage";
 import TagMangePage from "../views/TagMangePage";
 import Test from "../views/Test";
+import StatisticView from "../views/StatisticView";
 
 Vue.use(VueRouter);
 
@@ -43,10 +44,14 @@ const routes = [
                 path: '/manage/TypeManage',
                 name: 'TypeManagePage',
                 component: TypeMangePage
-            },,{
+            },{
                 path: '/manage/TagManage',
                 name: 'TagManagePage',
                 component: TagMangePage
+            },{
+                path: '/manage/Statistics',
+                name: 'StatisticsView',
+                component: StatisticView
             },
         ]
     },

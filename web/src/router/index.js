@@ -11,6 +11,7 @@ import UploadAnimePage from "../views/UploadAnimePage";
 import ZoneManagePage from "../views/ZoneManagePage";
 import TypeMangePage from "../views/TypeMangePage";
 import TagMangePage from "../views/TagMangePage";
+import Test from "../views/Test";
 
 Vue.use(VueRouter);
 
@@ -53,6 +54,10 @@ const routes = [
         path: '/main',
         name: 'Main',
         component: Main
+    },{
+        path: '/test',
+        name: 'Test',
+        component: Test
     },
     {
         path: '/view',

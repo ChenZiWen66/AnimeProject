@@ -1,6 +1,10 @@
 <template>
-    <!--这是一个动漫信息更新的模态框-->
     <div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            Launch demo modal
+        </button>
+
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -177,8 +181,13 @@
 </template>
 
 <script>
+    import AliPlayerTest from "../components/AliPlayerTest";
+
     export default {
-        name: "UpdateAnimeInfoModel"
+        name: "Test",
+        components: {
+            AliPlayerTest
+        }
     }
 </script>
 

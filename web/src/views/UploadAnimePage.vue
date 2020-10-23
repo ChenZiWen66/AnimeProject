@@ -5,44 +5,44 @@
             <!--左半侧-->
             <div class="col-md-5" style="background-color: lightgoldenrodyellow;height: 100vh">
                 <div class="form-group">
-                    <label for="animeName" class="col-sm-3 control-label">动漫名</label>
-                    <div class="col-sm-9">
+                    <label for="animeName" class="col-md-3 control-label">动漫名</label>
+                    <div class="col-md-9">
                         <input type="text" class="form-control" id="animeName" placeholder="请输入动漫名">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="alias" class="col-sm-3 control-label">别名</label>
-                    <div class="col-sm-9">
+                    <label for="alias" class="col-md-3 control-label">别名</label>
+                    <div class="col-md-9">
                         <input type="text" class="form-control" id="alias" placeholder="请输入别名">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="describe" class="col-sm-3 control-label">描述</label>
-                    <div class="col-sm-9">
+                    <label for="describe" class="col-md-3 control-label">描述</label>
+                    <div class="col-md-9">
                         <textarea class="form-control" id="describe" placeholder="描述" rows="6"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="animeYear" class="col-sm-3 control-label">年代</label>
-                    <div class="col-sm-9">
+                    <label for="animeYear" class="col-md-3 control-label">年代</label>
+                    <div class="col-md-9">
                         <input type="text" class="form-control" id="animeYear" placeholder="年代">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="animeIndex" class="col-sm-3 control-label">索引</label>
-                    <div class="col-sm-9">
+                    <label for="animeIndex" class="col-md-3 control-label">索引</label>
+                    <div class="col-md-9">
                         <input type="text" class="form-control" id="animeIndex" placeholder="索引">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="animeUpdateInfo" class="col-sm-3 control-label">更新信息</label>
-                    <div class="col-sm-9">
+                    <label for="animeUpdateInfo" class="col-md-3 control-label">更新信息</label>
+                    <div class="col-md-9">
                         <input type="text" class="form-control" id="animeUpdateInfo" placeholder="更新信息">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputFile" class="col-sm-3 control-label">封面路径</label>
-                    <div class="col-sm-9">
+                    <label for="exampleInputFile" class="col-md-3 control-label">封面路径</label>
+                    <div class="col-md-9">
                         <input type="file" id="exampleInputFile">
                         <p class="help-block">点击按钮上传图片</p>
                     </div>
@@ -51,8 +51,8 @@
             <!--右半侧-->
             <div class="col-md-5" style="background-color: lightgoldenrodyellow;height: 100vh">
                 <div class="form-group ">
-                    <label class="col-sm-3 control-label">类型</label>
-                    <div class="col-sm-9 checkboxBorder">
+                    <label class="col-md-3 control-label">类型</label>
+                    <div class="col-md-9 checkboxBorder">
                         <label class="checkbox-inline">
                             <input type="checkbox" id="inlineCheckbox1" value="option1"> 类型1
                         </label>
@@ -86,8 +86,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">地区</label>
-                    <div class="col-sm-9 checkboxBorder">
+                    <label class="col-md-3 control-label">地区</label>
+                    <div class="col-md-9 checkboxBorder">
                         <label class="checkbox-inline">
                             <input type="checkbox" id="inlineCheckbox11" value="option1"> 地区1
                         </label>
@@ -121,8 +121,8 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">标签</label>
-                    <div class="col-sm-9 checkboxBorder">
+                    <label class="col-md-3 control-label">标签</label>
+                    <div class="col-md-9 checkboxBorder">
                         <label class="checkbox-inline">
                             <input type="checkbox" id="inlineCheckbox21" value="option1"> 标签1
                         </label>

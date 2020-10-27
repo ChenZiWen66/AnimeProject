@@ -6,8 +6,8 @@
                 <label>
                     左边是部分是一个纵向表，里面有已经存放到数据库的地区信息
                     <select id="zone_info" multiple class="form-control zoneList">
-                        <option v-for="i in zoneList.length" :value="i" @dblclick="doubleClickOption(i)">{{
-                            zoneList[i-1].zone_name }}
+                        <option v-for="i in zoneList.length" :value="i">
+                            {{ zoneList[i-1].zone_name }}
                         </option>
                     </select>
                 </label>
@@ -75,9 +75,6 @@
                     _this.zoneList = response.data;
                 })
             },
-            doubleClickOption(message) {
-                console.log(message);
-            },
             click_btn_addZone() {
                 let _this = this;
                 let addZoneValue = document.querySelector("#addZone").value;
@@ -106,8 +103,6 @@
                     let id = _this.zoneList[option_index].id;
                     let uuid = _this.zoneList[option_index].uuid;
                     let zone_name = _this.updateZoneValue;
-                    console.log(option_index);
-                    console.log(zone_name);
                     formData.append('id', id);
                     formData.append('uuid', uuid);
                     formData.append('zone_name', zone_name);

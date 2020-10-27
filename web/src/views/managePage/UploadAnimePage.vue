@@ -17,9 +17,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="describe" class="col-md-3 control-label">描述</label>
+                    <label for="anime_describe" class="col-md-3 control-label">描述</label>
                     <div class="col-md-9">
-                        <textarea class="form-control" id="describe" placeholder="描述" rows="6"/>
+                        <textarea class="form-control" id="anime_describe" placeholder="描述" rows="6"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -50,108 +50,27 @@
             </div>
             <!--右半侧-->
             <div class="col-md-5" style="background-color: lightgoldenrodyellow;height: 100vh">
-                <div class="form-group ">
+                <div class="form-group col-md-12">
                     <label class="col-md-3 control-label">类型</label>
                     <div class="col-md-9 checkboxBorder">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox1" value="option1"> 类型1
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox2" value="option2"> 类型2
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox3" value="option3"> 类型3
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox4" value="option4"> 类型4
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox5" value="option5"> 类型5
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox6" value="option1"> 类型6
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox7" value="option2"> 类型7
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox8" value="option3"> 类型8
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox9" value="option4"> 类型9
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox10" value="option5"> 类型10
+                        <label  class="checkbox-inline" v-for="type in typeList">
+                            <input type="checkbox" id="inlineCheckbox1" :value="type.uuid"> {{type.type_name}}
                         </label>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-12">
                     <label class="col-md-3 control-label">地区</label>
                     <div class="col-md-9 checkboxBorder">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox11" value="option1"> 地区1
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox12" value="option2"> 地区2
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox13" value="option3"> 地区3
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox14" value="option4"> 地区4
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox15" value="option5"> 地区5
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox16" value="option1"> 地区6
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox17" value="option2"> 地区7
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox18" value="option3"> 地区8
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox19" value="option4"> 地区9
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox20" value="option5"> 地区10
+                        <label class="checkbox-inline" v-for="zone in zoneList">
+                            <input type="checkbox" id="inlineCheckbox11" :value="zone.uuid"> {{zone.zone_name}}
                         </label>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-md-12">
                     <label class="col-md-3 control-label">标签</label>
                     <div class="col-md-9 checkboxBorder">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox21" value="option1"> 标签1
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox22" value="option2"> 标签2
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox23" value="option3"> 标签3
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox24" value="option4"> 标签4
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox25" value="option5"> 标签5
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox26" value="option1"> 标签6
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox27" value="option2"> 标签7
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox28" value="option3"> 标签8
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox29" value="option4"> 标签9
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox30" value="option5"> 标签10
+                        <label class="checkbox-inline" v-for="tag in tagList">
+                            <input type="checkbox" id="inlineCheckbox21" :value="tag.uuid"> {{tag.tag_name}}
                         </label>
                     </div>
                 </div>
@@ -169,13 +88,46 @@
 
 <script>
     export default {
-        name: "UploadAnimePage"
+        name: "UploadAnimePage",
+        data() {
+            return {
+                zoneList: [],//地区信息
+                typeList: [],//分类信息
+                tagList: []//标签信息
+            }
+        },
+        mounted() {
+            let _this = this;
+            _this.getAttributeList();
+        },
+        methods: {
+            /**
+             * 获取属性信息
+             */
+            getAttributeList() {
+                let _this = this;
+                this.$http.get("http://localhost:9001/showAnimeType").then(function (response) {
+                    _this.typeList = response.data;
+                });
+                this.$http.get("http://localhost:9001/showAnimeZone").then(function (response) {
+                    _this.zoneList = response.data;
+                });
+                this.$http.get("http://localhost:9001/showAnimeTag").then(function (response) {
+                    _this.tagList = response.data;
+                });
+            }
+        }
     }
 </script>
 
 <style scoped>
     label {
         margin-top: 11px;
+    }
+
+    .checkbox-inline{
+        margin-top: 0 ;
+        margin-left: 10px;
     }
 
     input {
@@ -190,7 +142,8 @@
         border: 0 solid gray;
         border-bottom-width: 1px;
     }
-    .coverImg{
+
+    .coverImg {
         height: 200px;
     }
 </style>

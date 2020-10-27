@@ -111,28 +111,44 @@
                     formData.append('id', id);
                     formData.append('uuid', uuid);
                     formData.append('zone_name', zone_name);
-                }catch (e) {
+                } catch (e) {
                     _this.show_danger_alert('请选择地区信息');
                     return;
                 }
                 if (_this.updateZoneValue !== '') {
-                    _this.$http.post("http://localhost:9001/updateAnimeZone", formData).then(function (response) {
-                        _this.getZoneList();
-                        _this.show_success_alert('修改地区信息成功');
-                    });
+                    try {
+                        _this.$http.post("http://localhost:9001/updateAnimeZone", formData).then(function (response) {
+                            _this.getZoneList();
+                            _this.show_success_alert('修改地区信息成功');
+                        });
+                    } catch (e) {
+                        _this.show_danger_alert('更新信息失败');
+                    }
                 } else {
                     _this.show_danger_alert('请输入修改后的信息');
                 }
             },
             click_btn_deleteZone() {
                 let _this = this;
-                let option_index = document.querySelector("#zone_info").value - 1;//获取地区列表的序列号
-                let id = _this.zoneList[option_index].id;
                 let formData = new window.FormData();
-                formData.append('id', id);
-                _this.$http.post("http://localhost:9001/deleteAnimeZone", formData).then(function (response) {
-                    _this.getZoneList();
-                });
+                try {
+                    let option_index = document.querySelector("#zone_info").value - 1;//获取地区列表的序列号
+                    let id = _this.zoneList[option_index].id;
+                    formData.append('id', id);
+                } catch (e) {
+                    _this.show_danger_alert('请选择地区信息');
+                    return;
+                }
+
+                try {
+                    _this.$http.post("http://localhost:9001/deleteAnimeZone", formData).then(function (response) {
+                        _this.show_success_alert('删除地区信息成功');
+                        _this.getZoneList();
+                    });
+                } catch (e) {
+                    _this.show_danger_alert('删除地区信息失败');
+                }
+
             },
             show_success_alert(success_alert_content) {
                 let _this = this;

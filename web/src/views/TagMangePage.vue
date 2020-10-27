@@ -75,7 +75,6 @@
             click_btn_addTag() {
                 let _this = this;
                 let addTagValue = document.querySelector("#addTag").value;
-                console.log('111111');
                 if (addTagValue !== '') {
                     let formData = new window.FormData();
                     formData.append('tag_name', addTagValue);

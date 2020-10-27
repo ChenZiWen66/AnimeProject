@@ -31,9 +31,9 @@
 </template>
 
 <script>
-    import Navigation from "../components/Navigation";
-    import RecommendAnime from "../components/RecommendAnime";
-    import ViewLeftContent from "../components/ViewLeftContent";
+    import Navigation from "../../components/Navigation";
+    import RecommendAnime from "../../components/RecommendAnime";
+    import ViewLeftContent from "../../components/ViewLeftContent";
 
     export default {
         name: "AnimeView",

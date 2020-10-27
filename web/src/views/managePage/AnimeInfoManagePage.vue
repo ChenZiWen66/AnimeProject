@@ -59,7 +59,7 @@
             <div v-for="n in 4">
                 <div class="col-md-3">
                     <div class="thumbnail">
-                        <img src="../assets/xiaolan.jpg" alt="动漫封面">
+                        <img src="../../assets/xiaolan.jpg" alt="动漫封面">
                         <div class="caption">
                             <div>
                                 <h4>《陈子文的一天》</h4>
@@ -108,10 +108,10 @@
 </template>
 
 <script>
-    import AnimeManagementPagination from "../components/Management/AnimeManagementPagination";
-    import AnimeChapterUpdateModel from "../components/Management/AnimeChapterUpdateModal";
-    import AnimeChapterUploadModel from "../components/Management/AnimeChapterUploadModal";
-    import UpdateAnimeInfoModel from "../components/Management/UpdateAnimeInfoModal";
+    import AnimeManagementPagination from "../../components/Management/AnimeManagementPagination";
+    import AnimeChapterUpdateModel from "../../components/Management/AnimeChapterUpdateModal";
+    import AnimeChapterUploadModel from "../../components/Management/AnimeChapterUploadModal";
+    import UpdateAnimeInfoModel from "../../components/Management/UpdateAnimeInfoModal";
 
     export default {
         name: "AnimeInfoManagePage",

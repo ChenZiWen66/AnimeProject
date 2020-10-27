@@ -1,18 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Main from "../views/Main";
-import AnimeView from "../views/AnimeView";
-import AnimePlay from "../views/AnimePlay";
-import AnimeListPRC from "../views/AnimeListPRC";
-import ManagePage from "../views/ManagePage";
-import AnimeInfoManagePage from "../views/AnimeInfoManagePage";
-import UploadAnimePage from "../views/UploadAnimePage";
-import ZoneManagePage from "../views/ZoneManagePage";
-import TypeMangePage from "../views/TypeMangePage";
-import TagMangePage from "../views/TagMangePage";
+import Main from "../views/userPage/Main";
+import AnimeView from "../views/userPage/AnimeView";
+import AnimePlay from "../views/userPage/AnimePlay";
+import AnimeListPRC from "../views/userPage/AnimeListPRC";
+import ManagePage from "../views/managePage/ManagePage";
+import AnimeInfoManagePage from "../views/managePage/AnimeInfoManagePage";
+import UploadAnimePage from "../views/managePage/UploadAnimePage";
+import ZoneManagePage from "../views/managePage/ZoneManagePage";
+import TypeMangePage from "../views/managePage/TypeMangePage";
+import TagMangePage from "../views/managePage/TagMangePage";
 import Test from "../views/Test";
-import StatisticView from "../views/StatisticView";
+import StatisticView from "../views/managePage/StatisticView";
 
 Vue.use(VueRouter);
 

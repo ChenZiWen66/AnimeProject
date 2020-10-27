@@ -156,7 +156,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <img src="../assets/xiaolan.jpg" alt="选择的图片" class="img-thumbnail coverImg">
+                    <img src="../../assets/xiaolan.jpg" alt="选择的图片" class="img-thumbnail coverImg">
                 </div>
                 <div class="col-md-12">
                     <button class="btn btn-default btn-block" type="button">上传动漫</button>

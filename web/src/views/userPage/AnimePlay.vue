@@ -31,10 +31,10 @@
 </template>
 
 <script>
-    import Navigation from "../components/Navigation";
-    import AnimePlayerComponent from "../components/AnimePlayerComponent";
-    import AnimeAddressList from "../components/AnimeAddressList";
-    import RelativeAnime from "../components/RelativeAnime";
+    import Navigation from "../../components/Navigation";
+    import AnimePlayerComponent from "../../components/AnimePlayerComponent";
+    import AnimeAddressList from "../../components/AnimeAddressList";
+    import RelativeAnime from "../../components/RelativeAnime";
 
     export default {
         name: "AnimePlay",

@@ -28,10 +28,10 @@
 </template>
 
 <script>
-    import PageTop from "../components/PageTop";
-    import Navigation from "../components/Navigation";
-    import TagList from "../components/TagList";
-    import MediaContent from "../components/MediaContent";
+    import PageTop from "../../components/PageTop";
+    import Navigation from "../../components/Navigation";
+    import TagList from "../../components/TagList";
+    import MediaContent from "../../components/MediaContent";
 
     export default {
         name: "AnimeListMovie",

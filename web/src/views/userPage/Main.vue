@@ -47,13 +47,13 @@
 </template>
 
 <script>
-    import PageTop from "../components/PageTop";
-    import Navigation from "../components/Navigation";
-    import Carousel from "../components/Carousel";
-    import TagList from "../components/TagList";
-    import MediaContent from "../components/MediaContent";
-    import DailyUpdateList from "../components/DailyUpdateList";
-    import AnimeWeekRank from "../components/AnimeWeekRank";
+    import PageTop from "../../components/PageTop";
+    import Navigation from "../../components/Navigation";
+    import Carousel from "../../components/Carousel";
+    import TagList from "../../components/TagList";
+    import MediaContent from "../../components/MediaContent";
+    import DailyUpdateList from "../../components/DailyUpdateList";
+    import AnimeWeekRank from "../../components/AnimeWeekRank";
 
     export default {
         name: "Main",

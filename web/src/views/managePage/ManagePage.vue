@@ -16,8 +16,8 @@
 </template>
 
 <script>
-    import ManageTitle from "../components/Management/ManageTitle";
-    import LeftMenu from "../components/Management/LeftMenu";
+    import ManageTitle from "../../components/Management/ManageTitle";
+    import LeftMenu from "../../components/Management/LeftMenu";
 
     export default {
         name: "ManagePage",

@@ -10,45 +10,36 @@
                         <form class="navbar-form navbar-left">
                             <div class="form-group">
                                 <label>
-                                    <select class="form-control">
-                                        <option>不限地区</option>
-                                        <option>地区1</option>
-                                        <option>地区2</option>
-                                        <option>地区3</option>
-                                        <option>地区4</option>
-                                        <option>地区5</option>
+                                    <select class="form-control" name="selectZone" v-model="selected_zone">
+                                        <option value="*">不限地区</option>
+                                        <option v-for="zone in zoneList" :value="zone.uuid">{{zone.zone_name}}</option>
                                     </select>
                                 </label>
                                 <label>
-                                    <select class="form-control">
-                                        <option>不限分类</option>
-                                        <option>分类1</option>
-                                        <option>分类2</option>
-                                        <option>分类3</option>
-                                        <option>分类4</option>
-                                        <option>分类5</option>
+                                    <select class="form-control" name="selectType" v-model="selected_type">
+                                        <option value="*">不限分类</option>
+                                        <option v-for="type in typeList" :value="type.uuid">{{type.type_name}}</option>
                                     </select>
                                 </label>
                                 <label>
-                                    <select class="form-control">
-                                        <option>不限标签</option>
-                                        <option>标签1</option>
-                                        <option>标签2</option>
-                                        <option>标签3</option>
-                                        <option>标签4</option>
-                                        <option>标签5</option>
+                                    <select class="form-control" name="selectTag" v-model="selected_tag">
+                                        <option value="*">不限标签</option>
+                                        <option v-for="tag in tagList" :value="tag.uuid">{{tag.tag_name}}</option>
                                     </select>
                                 </label>
-                                <button type="button" class="btn btn-default">搜索</button>
+                                <button type="button" class="btn btn-default" @click="click_btn_SearchByAttribute">搜索
+                                </button>
                             </div>
                         </form>
                         <form class="navbar-form navbar-right">
                             <div class="form-group">
                                 <label>
-                                    <input type="text" class="form-control" placeholder="Search">
+                                    <input type="text" class="form-control" placeholder="Search"
+                                           v-model="search_content">
                                 </label>
                             </div>
-                            <button type="submit" class="btn btn-default">关键词搜索</button>
+                            <button type="submit" class="btn btn-default" @click="click_btn_SearchByKeyword">关键词搜索
+                            </button>
                         </form>
                     </div>
                 </nav>
@@ -121,7 +112,54 @@
             AnimeChapterUpdateModel,
             AnimeManagementPagination
         },
+        data() {
+            return {
+                animeInfoList: [],//获取的动漫信息
+                selected_type: '*',//被选中的分类信息
+                selected_zone: '*',//被选中的地区信息
+                selected_tag: '*',//被选中的标签信息
+                search_content: '',//搜索框的输入的内容
+                typeList: [],//获取的分类信息
+                zoneList: [],//获取的地区信息
+                tagList: []//获取的标签信息
+            }
+        },
+        mounted() {
+            let _this = this;
+            _this.getAttributeList();
+        },
         methods: {
+            /**
+             * 获取属性信息
+             */
+            getAttributeList() {
+                let _this = this;
+                this.$http.get("http://localhost:9001/showAnimeType").then(function (response) {
+                    _this.typeList = response.data;
+                });
+                this.$http.get("http://localhost:9001/showAnimeZone").then(function (response) {
+                    _this.zoneList = response.data;
+                });
+                this.$http.get("http://localhost:9001/showAnimeTag").then(function (response) {
+                    _this.tagList = response.data;
+                });
+            },
+            /**
+             * 点击了属性旁边的筛选按钮，开始根据属性查询
+             */
+            click_btn_SearchByAttribute() {
+                let _this = this;
+                console.log("选中的标签", _this.selected_tag);
+                console.log("选中的地区", _this.selected_zone);
+                console.log("选中的分类", _this.selected_type);
+            },
+            /**
+             * 点击了搜索框旁边的筛选按钮，开始根据输入内容进行查询
+             */
+            click_btn_SearchByKeyword() {
+                let _this = this;
+                console.log("输入内容", _this.search_content);
+            },
             doubleClickChapter() {
                 console.log("双击了剧集Chapter，将更新剧集信息");
                 $("#animeChapterUpdateModal").modal('show');

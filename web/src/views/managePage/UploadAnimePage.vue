@@ -172,6 +172,7 @@
              */
             async click_btn_upload() {
                 let _this = this;
+                let animeUUID;
                 if (!_this.is_selectCover) {
                     _this.show_danger_alert("请上传动漫封面！");
                 }
@@ -188,16 +189,35 @@
                     (!_this.is_selectCover))
                 ) {
                     //生成一个随机的UUID作为动漫的UUID,uuid1是根据机器码时间等生成的，而uuid4是根据自己设置的变量生成的，尽量使用uuid1
-                    let animeUUID = this.$uuid.v1();
-                    //console.log("uuid:", animeUUID);
+                    _this.animeUUID = this.$uuid.v1();
                     //获取文件后缀名
                     let cover_file = document.querySelector("#inputCoverImg").files[0];
                     let file_name = cover_file.name;//文件名
                     let cover_type = file_name.substring(file_name.lastIndexOf("."));//后缀
-                    //console.log("file_name", file_name);
-                    //console.log("cover_type", cover_type);
                     //上传图片至 /动漫UUID/cover.jpg
-                    let coverOSS_URL = await _this.upLoadFile2OSS(cover_file, animeUUID + '/cover' + cover_type);
+                    let coverOSS_URL = await _this.upLoadFile2OSS(cover_file, _this.animeUUID + '/cover' + cover_type);
+
+                    //上传动漫信息
+                    let formData = new window.FormData();
+                    formData.append("anime_name", _this.animeName_input);
+                    formData.append("anime_uuid",_this.animeUUID)
+                    formData.append("anime_type", _this.type_input.toString());
+                    formData.append("anime_describe", _this.anime_describe_input);
+                    formData.append("alias", _this.alias_input);
+                    formData.append("anime_zone", _this.zone_input.toString());
+                    formData.append("anime_year", _this.animeYear_input);
+                    formData.append("anime_tag", _this.tag_input.toString());
+                    formData.append("indexes", _this.animeIndex_input);
+                    formData.append("update_info", _this.animeUpdateInfo_input);
+                    formData.append("coverimg_src", coverOSS_URL);
+                    try {
+                        _this.$http.post("http://localhost:9001/insertAnimeInfo",formData).then(function () {
+                            _this.show_success_alert("添加动漫成功！");
+                        })
+                    }catch (e) {
+                        _this.show_danger_alert("添加动漫失败！");
+                    }
+
                 }
             },
             async upLoadFile2OSS(file, oss_src) {

@@ -80,7 +80,7 @@
              */
             alterPage: function (pageNumber) {
                 this.currentPage = pageNumber;
-                globalBus.$emit('videoInfoCurrentPage', pageNumber);
+                globalBus.$emit('PaginationCurrentPage', pageNumber);
             },
             /**
              * 上一页
@@ -89,7 +89,7 @@
                 if (this.currentPage > 1) {
                     this.currentPage = this.currentPage - 1
                 }
-                globalBus.$emit('videoInfoCurrentPage', this.currentPage)
+                globalBus.$emit('PaginationCurrentPage', this.currentPage)
             },
             /**
              * 下一页
@@ -99,7 +99,7 @@
                 if (this.currentPage < _this.maxPage) {
                     this.currentPage = this.currentPage + 1
                 }
-                globalBus.$emit('videoInfoCurrentPage', this.currentPage);
+                globalBus.$emit('PaginationCurrentPage', this.currentPage);
             }
         }
     }

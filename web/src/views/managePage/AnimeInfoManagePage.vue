@@ -122,14 +122,15 @@
                 typeList: [],//获取的分类信息
                 zoneList: [],//获取的地区信息
                 tagList: [],//获取的标签信息
-                current_page: 1,//当前页面数
-                max_page: 1,//最大页面数
+                current_page: 2,//当前页面数
+                max_page: 2,//最大页面数
                 page_capacity: 4,//页面大小
             }
         },
         mounted() {
             let _this = this;
             _this.getAttributeList();
+            _this.getAnimeInfo_maxPage_ByAttribute();
             _this.getAnimeInfoListByAttribute();
         },
         methods: {
@@ -148,17 +149,36 @@
                     _this.tagList = response.data;
                 });
             },
+            /**
+             * 通过属性查询动漫信息的数量并设置最大页面数
+             */
+            getAnimeInfo_maxPage_ByAttribute() {
+                let _this = this;
+                let formData = new window.FormData();
+                formData.append("anime_type", _this.selected_type);
+                formData.append("anime_tag", _this.selected_tag);
+                formData.append("anime_zone", _this.selected_zone);
+                this.$http.post("http://localhost:9001/getAnimeInfoCountByAttribute", formData).then(function (response) {
+                    _this.maxPage = Math.ceil(response.data.animeInfoCount / _this.page_capacity);
+                    console.log("最大页面数为:", _this.maxPage);
+                })
+            }
+            ,
+            /**
+             * 通过属性查询动漫信息
+             */
             getAnimeInfoListByAttribute() {
                 let _this = this;
                 let formData = new window.FormData();
                 formData.append("anime_type", _this.selected_type);
                 formData.append("anime_tag", _this.selected_tag);
                 formData.append("anime_zone", _this.selected_zone);
+                formData.append("current_page", _this.current_page);
+                formData.append("page_capacity", _this.page_capacity);
                 this.$http.post("http://localhost:9001/selectAnimeInfoByAttribute", formData).then(function (response) {
                     _this.animeInfoList = response.data;
                 })
-            }
-            ,
+            },
             /**
              * 点击了属性旁边的筛选按钮，开始根据属性查询
              */

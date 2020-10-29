@@ -144,6 +144,8 @@
                 let _this = this;
                 if (_this.searchMethod_is_Attribute) {
                     _this.getAnimeInfoListByAttribute();
+                } else {
+                    _this.getAnimeInfoListByKeyword();
                 }
             }
         },
@@ -176,8 +178,7 @@
                     _this.max_page = Math.ceil(response.data.animeInfoCount / _this.page_capacity);
                     globalBus.$emit('PaginationMaxPage', _this.max_page);
                 })
-            }
-            ,
+            },
             /**
              * 通过属性查询动漫信息
              */
@@ -195,20 +196,50 @@
                 _this.searchMethod_is_Attribute = true;
             },
             /**
+             * 通过搜索内容查询动漫信息的数量并设置最大页面数
+             */
+            getAnimeInfo_maxPage_ByKeyword() {
+                let _this = this;
+                let formData = new window.FormData();
+                formData.append("searchContent", _this.search_content);
+                this.$http.post("http://localhost:9001/getAnimeInfoCountByName", formData).then(function (response) {
+                    _this.max_page = Math.ceil(response.data.animeInfoCount / _this.page_capacity);
+                    globalBus.$emit('PaginationMaxPage', _this.max_page);
+                })
+            },
+            /**
+             * 通过搜索内容查询动漫信息
+             */
+            getAnimeInfoListByKeyword() {
+                let _this = this;
+                let formData = new window.FormData();
+                formData.append("searchContent", _this.search_content);
+                formData.append("current_page", _this.current_page);
+                formData.append("page_capacity", _this.page_capacity);
+                this.$http.post("http://localhost:9001/selectAnimeInfoByName", formData).then(function (response) {
+                    _this.animeInfoList = response.data;
+                });
+                _this.searchMethod_is_Attribute = false;
+            },
+            /**
              * 点击了属性旁边的筛选按钮，开始根据属性查询
              */
             click_btn_SearchByAttribute() {
                 let _this = this;
-                console.log("选中的标签", _this.selected_tag);
-                console.log("选中的地区", _this.selected_zone);
-                console.log("选中的分类", _this.selected_type);
+                _this.current_page = 1;
+                globalBus.$emit('setCurrentPage', _this.current_page);
+                _this.getAnimeInfo_maxPage_ByAttribute();
+                _this.getAnimeInfoListByAttribute();
             },
             /**
              * 点击了搜索框旁边的筛选按钮，开始根据输入内容进行查询
              */
             click_btn_SearchByKeyword() {
                 let _this = this;
-                console.log("输入内容", _this.search_content);
+                _this.current_page = 1;
+                globalBus.$emit('setCurrentPage', _this.current_page);
+                _this.getAnimeInfo_maxPage_ByKeyword();
+                _this.getAnimeInfoListByKeyword();
             },
             doubleClickChapter() {
                 console.log("双击了剧集Chapter，将更新剧集信息");

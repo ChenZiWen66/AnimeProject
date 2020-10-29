@@ -36,6 +36,9 @@
         },
         mounted() {
             let _this = this;
+            globalBus.$on("setCurrentPage", function (callback) {
+                _this.currentPage = callback;
+            });
             globalBus.$on("PaginationMaxPage", function (callback) {
                 _this.maxPage = callback;
                 _this.alterPageList();

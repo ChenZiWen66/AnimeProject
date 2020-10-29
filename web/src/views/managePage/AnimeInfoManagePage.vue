@@ -47,13 +47,13 @@
         </div>
         <!--中间的是信息栏-->
         <div class="row midContent">
-            <div v-for="animeInfo in animeInfoList">
+            <div v-for="i in animeInfoList.length">
                 <div class="col-md-3">
                     <div class="thumbnail">
-                        <img :src="animeInfo.coverimg_src" alt="动漫封面">
+                        <img :src="animeInfoList[i-1].coverimg_src" alt="动漫封面">
                         <div class="caption">
                             <div>
-                                <h4>《{{animeInfo.anime_name}}》</h4>
+                                <h4>《{{animeInfoList[i-1].anime_name}}》</h4>
                             </div>
                             <div>
                                 <label>
@@ -77,7 +77,7 @@
                                     <button type="button" class="btn btn-default" @click="clickDeleteAnimeInfo">删除动漫
                                     </button>
                                     <!--点击后弹出修改信息的模态框，可以修改信息-->
-                                    <button type="button" class="btn btn-default" @click="clickUpdateAnimeInfo">修改信息
+                                    <button type="button" class="btn btn-default" @click="clickUpdateAnimeInfo(i-1)">修改信息
                                     </button>
                                 </div>
                             </div>
@@ -94,7 +94,11 @@
         </div>
         <AnimeChapterUpdateModel/>
         <AnimeChapterUploadModel/>
-        <UpdateAnimeInfoModel/>
+        <UpdateAnimeInfoModel :anime_id="anime_id" :anime_uuid="anime_uuid" :animeName_input="animeName_input"
+                              :alias_input="alias_input" :anime_describe_input="anime_describe_input"
+                              :anime-year_input="animeYear_input" :animeIndex_input="animeIndex_input"
+                              :animeUpdateInfo_input="animeUpdateInfo_input" :type_input="type_input"
+                              :zone_input="zone_input" :tag_input="tag_input" :cover-img-src="coverImgSrc"/>
     </div>
 </template>
 
@@ -127,6 +131,21 @@
                 max_page: 1,//最大页面数
                 page_capacity: 4,//页面大小
                 searchMethod_is_Attribute: true,//查询方式是否为通过属性搜索
+
+
+                //单个剧集的信息
+                anime_id: 0,//动漫id
+                anime_uuid: '',//动漫uuid
+                animeName_input: '',//输入的动漫名称
+                alias_input: '',//输入的别名
+                anime_describe_input: '',//输入的动漫描述
+                animeYear_input: '',//输入的年份
+                animeIndex_input: '',//输入的索引
+                animeUpdateInfo_input: '',//输入的更新信息
+                type_input: "",//选择的分类
+                zone_input: "",//选择的地区
+                tag_input: "",//选择的标签
+                coverImgSrc:"",//封面路径
             }
         },
         mounted() {
@@ -249,9 +268,29 @@
                 console.log("点击了上传剧集的按钮，将更新剧集信息");
                 $("#animeChapterUploadModal").modal('show');
             },
-            clickUpdateAnimeInfo() {
-                console.log("点击了更新动漫信息的按钮，将更新动漫信息");
+            /**
+             * 点击了更新动漫信息的按钮，将更新动漫信息
+             * i:列表的第几个
+             */
+            clickUpdateAnimeInfo(i) {
                 $("#updateAnimeInfoModal").modal('show');
+                let _this = this;
+                _this.anime_id = _this.animeInfoList[i].id;//动漫id
+                _this.anime_uuid = _this.animeInfoList[i].uuid;//动漫uuid
+                _this.animeName_input = _this.animeInfoList[i].anime_name;//输入的动漫名称
+                _this.alias_input = _this.animeInfoList[i].alias;//输入的别名
+                _this.anime_describe_input = _this.animeInfoList[i].anime_describe;//输入的动漫描述
+                _this.animeYear_input = _this.animeInfoList[i].anime_year;//输入的年份
+                _this.animeIndex_input = _this.animeInfoList[i].indexes;//输入的索引
+                _this.animeUpdateInfo_input = _this.animeInfoList[i].update_info;//输入的更新信息
+                _this.type_input = _this.animeInfoList[i].anime_type.split(',');//选择的分类
+                _this.zone_input = _this.animeInfoList[i].anime_zone.split(',');//选择的地区
+                _this.tag_input = _this.animeInfoList[i].anime_tag.split(',');//选择的标签
+                _this.coverImgSrc=_this.animeInfoList[i].coverimg_src;//封面路径
+                console.log(_this.type_input);
+                console.log(_this.zone_input);
+                console.log(_this.tag_input);
+
             },
             clickDeleteAnimeInfo() {
                 console.log("点击了删除动漫的按钮，将删除动漫，以及它所有剧集");

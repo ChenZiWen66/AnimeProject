@@ -11,19 +11,19 @@
                             <div class="form-group">
                                 <label>
                                     <select class="form-control" name="selectZone" v-model="selected_zone">
-                                        <option value="*">不限地区</option>
+                                        <option value="">不限地区</option>
                                         <option v-for="zone in zoneList" :value="zone.uuid">{{zone.zone_name}}</option>
                                     </select>
                                 </label>
                                 <label>
                                     <select class="form-control" name="selectType" v-model="selected_type">
-                                        <option value="*">不限分类</option>
+                                        <option value="">不限分类</option>
                                         <option v-for="type in typeList" :value="type.uuid">{{type.type_name}}</option>
                                     </select>
                                 </label>
                                 <label>
                                     <select class="form-control" name="selectTag" v-model="selected_tag">
-                                        <option value="*">不限标签</option>
+                                        <option value="">不限标签</option>
                                         <option v-for="tag in tagList" :value="tag.uuid">{{tag.tag_name}}</option>
                                     </select>
                                 </label>
@@ -47,13 +47,13 @@
         </div>
         <!--中间的是信息栏-->
         <div class="row midContent">
-            <div v-for="n in 4">
+            <div v-for="animeInfo in animeInfoList">
                 <div class="col-md-3">
                     <div class="thumbnail">
-                        <img src="../../assets/xiaolan.jpg" alt="动漫封面">
+                        <img :src="animeInfo.coverimg_src" alt="动漫封面">
                         <div class="caption">
                             <div>
-                                <h4>《陈子文的一天》</h4>
+                                <h4>《{{animeInfo.anime_name}}》</h4>
                             </div>
                             <div>
                                 <label>
@@ -115,18 +115,22 @@
         data() {
             return {
                 animeInfoList: [],//获取的动漫信息
-                selected_type: '*',//被选中的分类信息
-                selected_zone: '*',//被选中的地区信息
-                selected_tag: '*',//被选中的标签信息
+                selected_type: '',//被选中的分类信息
+                selected_zone: '',//被选中的地区信息
+                selected_tag: '',//被选中的标签信息
                 search_content: '',//搜索框的输入的内容
                 typeList: [],//获取的分类信息
                 zoneList: [],//获取的地区信息
-                tagList: []//获取的标签信息
+                tagList: [],//获取的标签信息
+                current_page: 1,//当前页面数
+                max_page: 1,//最大页面数
+                page_capacity: 4,//页面大小
             }
         },
         mounted() {
             let _this = this;
             _this.getAttributeList();
+            _this.getAnimeInfoListByAttribute();
         },
         methods: {
             /**
@@ -144,6 +148,17 @@
                     _this.tagList = response.data;
                 });
             },
+            getAnimeInfoListByAttribute() {
+                let _this = this;
+                let formData = new window.FormData();
+                formData.append("anime_type", _this.selected_type);
+                formData.append("anime_tag", _this.selected_tag);
+                formData.append("anime_zone", _this.selected_zone);
+                this.$http.post("http://localhost:9001/selectAnimeInfoByAttribute", formData).then(function (response) {
+                    _this.animeInfoList = response.data;
+                })
+            }
+            ,
             /**
              * 点击了属性旁边的筛选按钮，开始根据属性查询
              */

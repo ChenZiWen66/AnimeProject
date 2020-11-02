@@ -99,7 +99,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary">确认修改</button>
+                        <button type="button" class="btn btn-primary" @click="click_btn_confirmSubmit">确认修改</button>
                     </div>
                 </div>
             </div>
@@ -108,6 +108,8 @@
 </template>
 
 <script>
+    import {globalBus} from "../GlobalBus";
+
     export default {
         name: "UpdateAnimeInfoModel",
         data() {
@@ -121,28 +123,41 @@
                 zoneList: [],//地区信息列表
                 typeList: [],//分类信息列表
                 tagList: [],//标签信息列表
+
+                //动漫信息
+                anime_id: 0,//动漫id
+                anime_uuid: '',//动漫uuid
+                animeName_input: '',//输入的动漫名称
+                alias_input: '',//输入的别名
+                anime_describe_input: '',//输入的动漫描述
+                animeYear_input: '',//输入的年份
+                animeIndex_input: '',//输入的索引
+                animeUpdateInfo_input: '',//输入的更新信息
+                type_input: "",//选择的分类
+                zone_input: "",//选择的地区
+                tag_input: "",//选择的标签
+                coverImgSrc: "",//封面路径
+
             }
-        },
-        props: {
-            anime_id: 0,//动漫id
-            anime_uuid: '',//动漫uuid
-            animeName_input: '',//输入的动漫名称
-            alias_input: '',//输入的别名
-            anime_describe_input: '',//输入的动漫描述
-            animeYear_input: '',//输入的年份
-            animeIndex_input: '',//输入的索引
-            animeUpdateInfo_input: '',//输入的更新信息
-            type_input: "",//选择的分类
-            zone_input: "",//选择的地区
-            tag_input: "",//选择的标签
-            coverImgSrc:{
-                type: String,
-                default:""
-            },//上传封面的路径，
         },
         mounted() {
             let _this = this;
             _this.getAttributeList();
+            globalBus.$on("anime_info_Json", function (response) {
+                let anime_info_json = JSON.parse(response);
+                _this.anime_id = anime_info_json.anime_id;
+                _this.anime_uuid = anime_info_json.anime_uuid;
+                _this.animeName_input = anime_info_json.animeName_input;
+                _this.alias_input = anime_info_json.alias_input;
+                _this.anime_describe_input = anime_info_json.anime_describe_input;
+                _this.animeYear_input = anime_info_json.animeYear_input;
+                _this.animeIndex_input = anime_info_json.animeIndex_input;
+                _this.animeUpdateInfo_input = anime_info_json.animeUpdateInfo_input;
+                _this.type_input = anime_info_json.type_input;
+                _this.zone_input = anime_info_json.zone_input;
+                _this.tag_input = anime_info_json.tag_input;
+                _this.coverImgSrc = anime_info_json.coverImgSrc;
+            })
         },
         methods: {
             /**
@@ -160,6 +175,35 @@
                     _this.tagList = response.data;
                 });
             },
+            //点击修改按钮，开始执行修改功能
+            click_btn_confirmSubmit() {
+                let _this = this;
+                // 如果有修改动漫封面，那么将阿里云的图片封面替换成这个封面
+
+                // 创建表单，修改动漫信息数据
+                let formData = new FormData();
+                formData.append("id", _this.anime_id);
+                formData.append("uuid", _this.anime_uuid);
+                formData.append("anime_name", _this.animeName_input);
+                formData.append("anime_type", _this.type_input.toString());
+                formData.append("anime_zone", _this.zone_input.toString());
+                formData.append("anime_tag", _this.tag_input.toString());
+                formData.append("anime_describe", _this.anime_describe_input);
+                formData.append("alias", _this.alias_input);
+                formData.append("anime_year", _this.animeYear_input);
+                formData.append("indexes", _this.animeIndex_input);
+                formData.append("update_info", _this.animeUpdateInfo_input);
+                formData.append("coverimg_src", _this.coverImgSrc);
+
+                try {
+                    _this.$http.post("http://localhost:9001/updateAnimeInfo", formData).then(function (response) {
+                        console.log("修改成功")
+                    })
+                } catch (e) {
+                    console.log("修改失败");
+                }
+
+            }
         }
     }
 </script>

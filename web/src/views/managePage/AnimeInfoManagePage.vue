@@ -77,7 +77,8 @@
                                     <button type="button" class="btn btn-default" @click="clickDeleteAnimeInfo">删除动漫
                                     </button>
                                     <!--点击后弹出修改信息的模态框，可以修改信息-->
-                                    <button type="button" class="btn btn-default" @click="clickUpdateAnimeInfo(i-1)">修改信息
+                                    <button type="button" class="btn btn-default" @click="clickUpdateAnimeInfo(i-1)">
+                                        修改信息
                                     </button>
                                 </div>
                             </div>
@@ -94,11 +95,7 @@
         </div>
         <AnimeChapterUpdateModel/>
         <AnimeChapterUploadModel/>
-        <UpdateAnimeInfoModel :anime_id="anime_id" :anime_uuid="anime_uuid" :animeName_input="animeName_input"
-                              :alias_input="alias_input" :anime_describe_input="anime_describe_input"
-                              :anime-year_input="animeYear_input" :animeIndex_input="animeIndex_input"
-                              :animeUpdateInfo_input="animeUpdateInfo_input" :type_input="type_input"
-                              :zone_input="zone_input" :tag_input="tag_input" :cover-img-src="coverImgSrc"/>
+        <UpdateAnimeInfoModel/>
     </div>
 </template>
 
@@ -145,7 +142,7 @@
                 type_input: "",//选择的分类
                 zone_input: "",//选择的地区
                 tag_input: "",//选择的标签
-                coverImgSrc:"",//封面路径
+                coverImgSrc: "",//封面路径
             }
         },
         mounted() {
@@ -275,22 +272,24 @@
             clickUpdateAnimeInfo(i) {
                 $("#updateAnimeInfoModal").modal('show');
                 let _this = this;
-                _this.anime_id = _this.animeInfoList[i].id;//动漫id
-                _this.anime_uuid = _this.animeInfoList[i].uuid;//动漫uuid
-                _this.animeName_input = _this.animeInfoList[i].anime_name;//输入的动漫名称
-                _this.alias_input = _this.animeInfoList[i].alias;//输入的别名
-                _this.anime_describe_input = _this.animeInfoList[i].anime_describe;//输入的动漫描述
-                _this.animeYear_input = _this.animeInfoList[i].anime_year;//输入的年份
-                _this.animeIndex_input = _this.animeInfoList[i].indexes;//输入的索引
-                _this.animeUpdateInfo_input = _this.animeInfoList[i].update_info;//输入的更新信息
-                _this.type_input = _this.animeInfoList[i].anime_type.split(',');//选择的分类
-                _this.zone_input = _this.animeInfoList[i].anime_zone.split(',');//选择的地区
-                _this.tag_input = _this.animeInfoList[i].anime_tag.split(',');//选择的标签
-                _this.coverImgSrc=_this.animeInfoList[i].coverimg_src;//封面路径
-                console.log(_this.type_input);
-                console.log(_this.zone_input);
-                console.log(_this.tag_input);
-
+                //将动漫信息打包成json，然后传递给模态框
+                let anime_info = {
+                    anime_id: _this.animeInfoList[i].id,
+                    anime_uuid: _this.animeInfoList[i].uuid,
+                    animeName_input: _this.animeInfoList[i].anime_name,//输入的动漫名称
+                    alias_input: _this.animeInfoList[i].alias,//输入的别名
+                    anime_describe_input: _this.animeInfoList[i].anime_describe,//输入的动漫描述
+                    animeYear_input: _this.animeInfoList[i].anime_year,//输入的年份
+                    animeIndex_input: _this.animeInfoList[i].indexes,//输入的索引
+                    animeUpdateInfo_input: _this.animeInfoList[i].update_info,//输入的更新信息
+                    type_input: _this.animeInfoList[i].anime_type.split(','),//选择的分类
+                    zone_input: _this.animeInfoList[i].anime_zone.split(','),//选择的地区
+                    tag_input: _this.animeInfoList[i].anime_tag.split(','),//选择的标签
+                    coverImgSrc: _this.animeInfoList[i].coverimg_src//封面路径
+                };
+                let anime_info_Json = JSON.stringify(anime_info);
+                // console.log(anime_info_Json);
+                globalBus.$emit("anime_info_Json", anime_info_Json);
             },
             clickDeleteAnimeInfo() {
                 console.log("点击了删除动漫的按钮，将删除动漫，以及它所有剧集");

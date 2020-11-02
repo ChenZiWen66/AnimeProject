@@ -166,22 +166,24 @@
                 formData.append("uuid", chapterUUID);
 
                 try {
-                    this.$http.post("http://localhost:9001/insertChapterInfo",formData).then(function (response) {
+                    this.$http.post("http://localhost:9001/insertChapterInfo", formData).then(function (response) {
                         console.log("上传成功");
                     });
-                }catch (e) {
+                } catch (e) {
                     console.log("上传失败");
                 }
 
             },
-            upLoadFile2OSS(file, oss_src) {
+            async upLoadFile2OSS(file, oss_src) {
                 let _this = this;
+                let src;
                 let formData = new window.FormData();
-                formData.append("file",file);
-                formData.append("src",oss_src);
-                _this.$http.post("http://localhost:9002/uploadFile2OSS",formData).then(function (response) {
-                    return response.data.fileUrl_OSS;
-                })
+                formData.append("file", file);
+                formData.append("src", oss_src);
+                await _this.$http.post("http://localhost:9002/uploadFile2OSS", formData).then(function (response) {
+                    src = response.data.fileUrl_OSS;
+                });
+                return src
             },
         }
     }

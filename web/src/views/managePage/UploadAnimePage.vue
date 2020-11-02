@@ -170,7 +170,7 @@
             /**
              * 点击上传按钮,触发上传事件
              */
-            click_btn_upload() {
+            async click_btn_upload() {
                 let _this = this;
                 let animeUUID;
                 if (!_this.is_selectCover) {
@@ -195,8 +195,9 @@
                     let file_name = cover_file.name;//文件名
                     let cover_type = file_name.substring(file_name.lastIndexOf("."));//后缀
                     //上传图片至 /动漫UUID/cover.jpg
-                    let coverOSS_URL = _this.upLoadFile2OSS(cover_file, _this.animeUUID + '/cover' + cover_type);
+                    let coverOSS_URL = await _this.upLoadFile2OSS(cover_file, _this.animeUUID + '/cover' + cover_type);
 
+                    console.log("成功上传文件coverOSS：", coverOSS_URL);
                     //上传动漫信息
                     let formData = new window.FormData();
                     formData.append("anime_name", _this.animeName_input);
@@ -220,14 +221,16 @@
 
                 }
             },
-            upLoadFile2OSS(file, oss_src) {
+            async upLoadFile2OSS(file, oss_src) {
                 let _this = this;
+                let src;
                 let formData = new window.FormData();
                 formData.append("file", file);
                 formData.append("src", oss_src);
-                _this.$http.post("http://localhost:9002/uploadFile2OSS", formData).then(function (response) {
-                    return response.data.fileUrl_OSS;
-                })
+                await _this.$http.post("http://localhost:9002/uploadFile2OSS", formData).then(function (response) {
+                    src = response.data.fileUrl_OSS;
+                });
+                return src
             },
             empty_warning(input_name, input_label) {
                 let _this = this;

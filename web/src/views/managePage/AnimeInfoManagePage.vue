@@ -74,7 +74,8 @@
                                     <button type="button" class="btn btn-default" @click="clickUploadChapter">上传剧集
                                     </button>
                                     <!--点击后删除该动漫，以及它所有的剧集-->
-                                    <button type="button" class="btn btn-default" @click="clickDeleteAnimeInfo">删除动漫
+                                    <button type="button" class="btn btn-default" @click="clickDeleteAnimeInfo(i-1)">
+                                        删除动漫
                                     </button>
                                     <!--点击后弹出修改信息的模态框，可以修改信息-->
                                     <button type="button" class="btn btn-default" @click="clickUpdateAnimeInfo(i-1)">
@@ -288,11 +289,22 @@
                     coverImgSrc: _this.animeInfoList[i].coverimg_src//封面路径
                 };
                 let anime_info_Json = JSON.stringify(anime_info);
-                // console.log(anime_info_Json);
+                console.log(anime_info_Json);
                 globalBus.$emit("anime_info_Json", anime_info_Json);
             },
-            clickDeleteAnimeInfo() {
+            clickDeleteAnimeInfo(i) {
                 console.log("点击了删除动漫的按钮，将删除动漫，以及它所有剧集");
+                let _this = this;
+                let formData = new window.FormData();
+                formData.append("id", _this.animeInfoList[i].id);
+                try {
+                    _this.$http.post("http://localhost:9001/deleteAnimeInfo", formData).then(function (response) {
+                        console.log("删除动漫成功");
+                    })
+                } catch (e) {
+                    console.log("删除动漫失败");
+                }
+
             }
         }
     }

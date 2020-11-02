@@ -71,7 +71,7 @@
                             <div>
                                 <div class="btn-group btn-group-xs" role="group">
                                     <!--点击后弹出上传剧集的模态框，可以上传剧集-->
-                                    <button type="button" class="btn btn-default" @click="clickUploadChapter">上传剧集
+                                    <button type="button" class="btn btn-default" @click="clickUploadChapter(i-1)">上传剧集
                                     </button>
                                     <!--点击后删除该动漫，以及它所有的剧集-->
                                     <button type="button" class="btn btn-default" @click="clickDeleteAnimeInfo(i-1)">
@@ -262,9 +262,17 @@
                 console.log("双击了剧集Chapter，将更新剧集信息");
                 $("#animeChapterUpdateModal").modal('show');
             },
-            clickUploadChapter() {
+            clickUploadChapter(i) {
                 console.log("点击了上传剧集的按钮，将更新剧集信息");
+                let _this = this;
                 $("#animeChapterUploadModal").modal('show');
+                let anime_info = {
+                    anime_id: _this.animeInfoList[i].id,
+                    anime_uuid: _this.animeInfoList[i].uuid,
+                    anime_name: _this.animeInfoList[i].anime_name,//输入的动漫名称
+                };
+                let anime_info_Json = JSON.stringify(anime_info);
+                globalBus.$emit("send_anime_info2ChapterManage", anime_info_Json);
             },
             /**
              * 点击了更新动漫信息的按钮，将更新动漫信息

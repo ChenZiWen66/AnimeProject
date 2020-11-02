@@ -170,7 +170,7 @@
             /**
              * 点击上传按钮,触发上传事件
              */
-            async click_btn_upload() {
+            click_btn_upload() {
                 let _this = this;
                 let animeUUID;
                 if (!_this.is_selectCover) {
@@ -195,12 +195,12 @@
                     let file_name = cover_file.name;//文件名
                     let cover_type = file_name.substring(file_name.lastIndexOf("."));//后缀
                     //上传图片至 /动漫UUID/cover.jpg
-                    let coverOSS_URL = await _this.upLoadFile2OSS(cover_file, _this.animeUUID + '/cover' + cover_type);
+                    let coverOSS_URL = _this.upLoadFile2OSS(cover_file, _this.animeUUID + '/cover' + cover_type);
 
                     //上传动漫信息
                     let formData = new window.FormData();
                     formData.append("anime_name", _this.animeName_input);
-                    formData.append("anime_uuid",_this.animeUUID)
+                    formData.append("anime_uuid", _this.animeUUID);
                     formData.append("anime_type", _this.type_input.toString());
                     formData.append("anime_describe", _this.anime_describe_input);
                     formData.append("alias", _this.alias_input);
@@ -211,41 +211,23 @@
                     formData.append("update_info", _this.animeUpdateInfo_input);
                     formData.append("coverimg_src", coverOSS_URL);
                     try {
-                        _this.$http.post("http://localhost:9001/insertAnimeInfo",formData).then(function () {
+                        _this.$http.post("http://localhost:9001/insertAnimeInfo", formData).then(function () {
                             _this.show_success_alert("添加动漫成功！");
                         })
-                    }catch (e) {
+                    } catch (e) {
                         _this.show_danger_alert("添加动漫失败！");
                     }
 
                 }
             },
-            async upLoadFile2OSS(file, oss_src) {
+            upLoadFile2OSS(file, oss_src) {
                 let _this = this;
-                let shardSize = 3 * 1024 * 1024;
-                let shardIndex = 0.0;//视频文件分片索引
-                let totalIndex = Math.ceil(file.size / shardSize);
-                let fileOSSUrl = '';
-                while (shardIndex < totalIndex) {
-                    let start = shardIndex * shardSize;
-                    let end = Math.min(start + shardSize, file.size);
-                    let formData = new window.FormData();
-                    //console.log("上传分片:", start, "~~~~", end);
-                    //截取分片
-                    let fileShard = file.slice(start, end);
-                    formData.append('file', fileShard);
-                    formData.append('currentIndex', shardIndex.toString());
-                    formData.append('totalIndex', totalIndex.toString());
-                    formData.append('fileName', file.name);
-                    formData.append('oss_src', oss_src);
-                    //console.log("上传第", shardIndex, "个视频分片");
-                    await _this.$http.post("http://localhost:9002/uploadFile", formData).then(function (response) {
-                        //console.log(response.data.fileUrl_OSS);
-                        fileOSSUrl = response.data.fileUrl_OSS
-                    });
-                    shardIndex++;
-                }
-                return fileOSSUrl;
+                let formData = new window.FormData();
+                formData.append("file", file);
+                formData.append("src", oss_src);
+                _this.$http.post("http://localhost:9002/uploadFile2OSS", formData).then(function (response) {
+                    return response.data.fileUrl_OSS;
+                })
             },
             empty_warning(input_name, input_label) {
                 let _this = this;

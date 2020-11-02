@@ -174,32 +174,14 @@
                 }
 
             },
-            async upLoadFile2OSS(file, oss_src) {
+            upLoadFile2OSS(file, oss_src) {
                 let _this = this;
-                let shardSize = 3 * 1024 * 1024;
-                let shardIndex = 0.0;//视频文件分片索引
-                let totalIndex = Math.ceil(file.size / shardSize);
-                let fileOSSUrl = '';
-                while (shardIndex < totalIndex) {
-                    let start = shardIndex * shardSize;
-                    let end = Math.min(start + shardSize, file.size);
-                    let formData = new window.FormData();
-                    //console.log("上传分片:", start, "~~~~", end);
-                    //截取分片
-                    let fileShard = file.slice(start, end);
-                    formData.append('file', fileShard);
-                    formData.append('currentIndex', shardIndex.toString());
-                    formData.append('totalIndex', totalIndex.toString());
-                    formData.append('fileName', file.name);
-                    formData.append('oss_src', oss_src);
-                    //console.log("上传第", shardIndex, "个视频分片");
-                    await _this.$http.post("http://localhost:9002/uploadFile", formData).then(function (response) {
-                        //console.log(response.data.fileUrl_OSS);
-                        fileOSSUrl = response.data.fileUrl_OSS
-                    });
-                    shardIndex++;
-                }
-                return fileOSSUrl;
+                let formData = new window.FormData();
+                formData.append("file",file);
+                formData.append("src",oss_src);
+                _this.$http.post("http://localhost:9002/uploadFile2OSS",formData).then(function (response) {
+                    return response.data.fileUrl_OSS;
+                })
             },
         }
     }

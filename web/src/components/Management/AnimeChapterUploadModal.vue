@@ -183,7 +183,7 @@
                 await _this.$http.post("http://localhost:9002/uploadFile2OSS", formData).then(function (response) {
                     src = response.data.fileUrl_OSS;
                 });
-                return src
+                return src;
             },
         }
     }

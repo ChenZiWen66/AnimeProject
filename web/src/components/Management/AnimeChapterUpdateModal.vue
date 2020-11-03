@@ -38,6 +38,7 @@
                                 <p class="help-block col-md-12">点击按钮修改章节封面</p>
                                 <div class="col-md-12">
                                     <img :src="chapter_cover_src" alt="章节封面">
+
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -99,7 +100,6 @@
                 console.log("封面路径",_this.chapter_cover_src);
                 console.log("视频路径",_this.chapter_video_src);
                 _this.$refs.player.addPlayer(_this.chapter_name, _this.chapter_cover_src, _this.chapter_video_src);
-                // globalBus.$emit("videoInfo_updateChapter", [_this.chapter_name, _this.chapter_video_src, _this.chapter_cover_src]);
             })
         },
         methods: {

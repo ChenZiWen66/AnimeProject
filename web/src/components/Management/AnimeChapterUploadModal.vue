@@ -52,13 +52,14 @@
                                         <input type="file" id="chapterVideo" @change="change_VideoInput()">
                                     </div>
                                     <p class="help-block col-md-12">点击按钮上传视频</p>
-                                    <div class="col-md-12">
-                                        <AliPlayerManage ref="player1" />
-                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <AliPlayerManage ref="player1"/>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" @click="start">播放</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal" @click="quitModal()">关闭
                             </button>
                             <button type="button" class="btn btn-primary" @click="uploadChapter()">上传剧集</button>
@@ -71,10 +72,8 @@
 </template>
 
 <script>
-
-
-    import AliPlayerManage from "./AliPlayerManage";
     import {globalBus} from "../GlobalBus";
+    import AliPlayerManage from "./AliPlayerManage";
 
     export default {
         name: "AnimeChapterUploadModel",
@@ -106,6 +105,7 @@
                 _this.anime_name = animeInfoJSON.anime_name;
                 _this.anime_id = animeInfoJSON.anime_id;
                 _this.anime_uuid = animeInfoJSON.anime_uuid;
+                globalBus.$off("send_anime_info2ChapterManage");
             })
         },
         methods: {
@@ -132,8 +132,13 @@
                     console.log("即将播放视频");
                     _this.chapter_video_src=this.result;
                     _this.$refs.player1.addPlayer(_this.chapter_name,_this.chapter_cover_src,_this.chapter_video_src);
-                }
+                };
+
             },
+            start(){
+                let _this = this;
+                this.$refs.player1.addPlayer('标题',"https://czwhub.oss-cn-shanghai.aliyuncs.com/xiaolan.jpg","https://czwhub.oss-cn-shanghai.aliyuncs.com/SEVENS%20014..mp4");            }
+            ,
             quitModal() {
                 console.log("退出了模态框,初始化信息");
                 let _this = this;

@@ -132,7 +132,6 @@
                 searchMethod_is_Attribute: true,//查询方式是否为通过属性搜索
 
 
-
                 //单个剧集的信息
                 anime_id: 0,//动漫id
                 anime_uuid: '',//动漫uuid
@@ -148,8 +147,8 @@
                 coverImgSrc: "",//封面路径
 
                 //剧集信息
-                chapterInfoList:[],
-                chapterInfoListJSON:'',
+                chapterInfoList: [],
+                getChapterFlag: true,
             }
         },
         mounted() {
@@ -215,10 +214,11 @@
                 formData.append("page_capacity", _this.page_capacity);
                 this.$http.post("http://localhost:9001/selectAnimeInfoByAttribute", formData).then(function (response) {
                     _this.animeInfoList = response.data;
-                    for (let i = 0; i < _this.animeInfoList.length; i++) {
+                    for (let i = 0; i < _this.animeInfoList.length && _this.getChapterFlag; i++) {
+                        _this.getChapterFlag = false;
                         _this.getChapterInfoList(_this.animeInfoList[i].uuid);
                     }
-                    console.log("动漫信息",_this.animeInfoList);
+                    console.log("动漫信息", _this.animeInfoList);
                     console.log("章节信息:", _this.chapterInfoList);
                 });
                 _this.searchMethod_is_Attribute = true;
@@ -233,8 +233,9 @@
                 let _this = this;
                 formData.append("parentUUID", animeUUID);
                 this.$http.post("http://localhost:9001/selectChapterInfoByParent", formData).then(function (response) {
-                    console.log(animeUUID,":",response.data);
+                    console.log(animeUUID, ":", response.data);
                     _this.chapterInfoList.push(response.data);
+                    _this.getChapterFlag=true;
                     console.log("插了一个章节信息");
                 });
             },

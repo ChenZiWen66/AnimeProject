@@ -53,7 +53,7 @@
                                     </div>
                                     <p class="help-block col-md-12">点击按钮上传视频</p>
                                     <div class="col-md-12">
-                                        <AliPlayerManage ref="player"/>
+                                        <AliPlayerManage ref="player1" />
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +129,9 @@
                 let reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onloadend = function () {
-                    globalBus.$emit("videoInfo_manage", ["title", this.result, _this.chapter_cover_src]);
+                    console.log("即将播放视频");
+                    _this.chapter_video_src=this.result;
+                    _this.$refs.player1.addPlayer(_this.chapter_name,_this.chapter_cover_src,_this.chapter_video_src);
                 }
             },
             quitModal() {
@@ -139,7 +141,7 @@
                 _this.chapter_video_src = '';
                 _this.chapter_cover_src = "https://czwhub.oss-cn-shanghai.aliyuncs.com/xiaolan.jpg";
                 _this.chapter_uuid = '';
-                _this.$refs.player.deletePlayer();
+                _this.$refs.player1.deletePlayer();
                 _this.is_selectCover = false;//是否选择了封面
                 _this.is_selectVideo = false;//是否选择了视频
             },

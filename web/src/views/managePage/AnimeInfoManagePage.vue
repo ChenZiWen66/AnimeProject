@@ -56,17 +56,17 @@
                                 <h4>《{{animeInfoList[i-1].anime_name}}》</h4>
                             </div>
                             <div>
-                                <label>
-                                    一共10集
+                                <label v-if="chapterInfoList[i-1]">
+                                    一共{{chapterInfoList[i-1].length}}集
                                     <select multiple class="form-control">
-                                        <option @dblclick="doubleClickChapter"
-                                                v-for="chapterInfo in chapterInfoList[i-1]">
-                                            {{ chapterInfo.chapter_name }}
-                                        </option>
-                                        <option @dblclick="doubleClickChapter">
-                                            aaaaaa
+                                        <option v-for="chapterIndex in chapterInfoList[i-1].length"
+                                                @dblclick="doubleClickChapter(i-1,chapterIndex-1)">
+                                            {{ chapterInfoList[i-1][chapterIndex-1].chapter_name }}
                                         </option>
                                     </select>
+                                </label>
+                                <label v-else>
+                                    点击下方按钮上传剧集
                                 </label>
                             </div>
                             <div>
@@ -203,7 +203,7 @@
              * 通过属性查询动漫信息
              */
             getAnimeInfoListByAttribute() {
-                console.log("开始查询信息");
+                // console.log("开始查询信息");
                 let _this = this;
                 let formData = new window.FormData();
                 formData.append("anime_type", _this.selected_type);
@@ -214,9 +214,9 @@
                 this.$http.post("http://localhost:9001/selectAnimeInfoByAttribute", formData).then(function (response) {
                     _this.animeInfoList = response.data;
                     for (let i = 0; i < _this.animeInfoList.length; i++) {
-                        _this.getChapterInfoList(_this.animeInfoList[i].uuid,i);
+                        _this.getChapterInfoList(_this.animeInfoList[i].uuid, i);
                     }
-                    console.log("动漫信息", _this.animeInfoList);
+                    // console.log("动漫信息", _this.animeInfoList);
                     console.log("章节信息:", _this.chapterInfoList);
                 });
                 _this.searchMethod_is_Attribute = true;
@@ -226,14 +226,14 @@
              *通过动漫的UUID查询动漫剧集信息
              *
              */
-            getChapterInfoList(animeUUID,index) {
+            getChapterInfoList(animeUUID, index) {
                 let formData = new FormData();
                 let _this = this;
                 formData.append("parentUUID", animeUUID);
                 this.$http.post("http://localhost:9001/selectChapterInfoByParent", formData).then(function (response) {
-                    console.log(animeUUID, ":", response.data);
+                    // console.log(animeUUID, ":", response.data);
                     _this.$set(_this.chapterInfoList, index, response.data);
-                    console.log("插了一个章节信息,index=",index);
+                    // console.log("插了一个章节信息,index=",index);
                 });
             },
             /**
@@ -282,10 +282,25 @@
                 _this.getAnimeInfo_maxPage_ByKeyword();
                 _this.getAnimeInfoListByKeyword();
             },
-            doubleClickChapter() {
+            doubleClickChapter(anime_index,chapterIndex) {
                 console.log("双击了剧集Chapter，将更新剧集信息");
+                let _this = this;
+                let chapter_info = {
+                    chapter_id:_this.chapterInfoList[anime_index][chapterIndex].id,
+                    chapter_name:_this.chapterInfoList[anime_index][chapterIndex].chapter_name,
+                    chapter_uuid: _this.chapterInfoList[anime_index][chapterIndex].uuid,
+                    chapter_parent:_this.chapterInfoList[anime_index][chapterIndex].parent,
+                    chapter_video_src:_this.chapterInfoList[anime_index][chapterIndex].chapter_video_src,
+                    chapter_cover_src:_this.chapterInfoList[anime_index][chapterIndex].chapter_cover_src,
+                    anime_name:_this.animeInfoList[anime_index].anime_name,//动漫名称
+                };
+                let chapter_info_Json = JSON.stringify(chapter_info);
+                globalBus.$emit("chapterInfo_2_UpdateModal",chapter_info_Json);
                 $("#animeChapterUpdateModal").modal('show');
             },
+            /**
+             *点击了上传剧集的按钮，将更新剧集信息
+             */
             clickUploadChapter(i) {
                 console.log("点击了上传剧集的按钮，将更新剧集信息");
                 let _this = this;
@@ -324,6 +339,10 @@
                 console.log(anime_info_Json);
                 globalBus.$emit("anime_info_Json", anime_info_Json);
             },
+            /**
+             * 点击了删除动漫信息的按钮，将删除动漫信息
+             * @param i
+             */
             clickDeleteAnimeInfo(i) {
                 console.log("点击了删除动漫的按钮，将删除动漫，以及它所有剧集");
                 let _this = this;
@@ -336,7 +355,6 @@
                 } catch (e) {
                     console.log("删除动漫失败");
                 }
-
             }
         }
     }

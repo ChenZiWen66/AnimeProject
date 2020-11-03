@@ -59,7 +59,6 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" @click="start">播放</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal" @click="quitModal()">关闭
                             </button>
                             <button type="button" class="btn btn-primary" @click="uploadChapter()">上传剧集</button>
@@ -135,10 +134,6 @@
                 };
 
             },
-            start(){
-                let _this = this;
-                this.$refs.player1.addPlayer('标题',"https://czwhub.oss-cn-shanghai.aliyuncs.com/xiaolan.jpg","https://czwhub.oss-cn-shanghai.aliyuncs.com/SEVENS%20014..mp4");            }
-            ,
             quitModal() {
                 console.log("退出了模态框,初始化信息");
                 let _this = this;

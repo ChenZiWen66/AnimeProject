@@ -57,14 +57,15 @@
                             </div>
                             <div>
                                 <label>
-                                    一共6集
+                                    一共10集
                                     <select multiple class="form-control">
-                                        <option @dblclick="doubleClickChapter">第1集</option>
-                                        <option @dblclick="doubleClickChapter">第2集</option>
-                                        <option @dblclick="doubleClickChapter">第3集</option>
-                                        <option @dblclick="doubleClickChapter">第4集</option>
-                                        <option @dblclick="doubleClickChapter">第5集</option>
-                                        <option @dblclick="doubleClickChapter">OVA</option>
+                                        <option @dblclick="doubleClickChapter"
+                                                v-for="chapterInfo in chapterInfoList[i-1]">
+                                            {{ chapterInfo.chapter_name }}
+                                        </option>
+                                        <option @dblclick="doubleClickChapter">
+                                            aaaaaa
+                                        </option>
                                     </select>
                                 </label>
                             </div>
@@ -131,6 +132,7 @@
                 searchMethod_is_Attribute: true,//查询方式是否为通过属性搜索
 
 
+
                 //单个剧集的信息
                 anime_id: 0,//动漫id
                 anime_uuid: '',//动漫uuid
@@ -144,6 +146,10 @@
                 zone_input: "",//选择的地区
                 tag_input: "",//选择的标签
                 coverImgSrc: "",//封面路径
+
+                //剧集信息
+                chapterInfoList:[],
+                chapterInfoListJSON:'',
             }
         },
         mounted() {
@@ -154,7 +160,6 @@
                 _this.current_page = callback;
             });
             _this.getAnimeInfoListByAttribute();
-
         },
         watch: {
             current_page() {
@@ -200,6 +205,7 @@
              * 通过属性查询动漫信息
              */
             getAnimeInfoListByAttribute() {
+                console.log("开始查询信息");
                 let _this = this;
                 let formData = new window.FormData();
                 formData.append("anime_type", _this.selected_type);
@@ -209,8 +215,28 @@
                 formData.append("page_capacity", _this.page_capacity);
                 this.$http.post("http://localhost:9001/selectAnimeInfoByAttribute", formData).then(function (response) {
                     _this.animeInfoList = response.data;
+                    for (let i = 0; i < _this.animeInfoList.length; i++) {
+                        _this.getChapterInfoList(_this.animeInfoList[i].uuid);
+                    }
+                    console.log("动漫信息",_this.animeInfoList);
+                    console.log("章节信息:", _this.chapterInfoList);
                 });
                 _this.searchMethod_is_Attribute = true;
+            },
+
+            /**
+             *通过动漫的UUID查询动漫剧集信息
+             *
+             */
+            getChapterInfoList(animeUUID) {
+                let formData = new FormData();
+                let _this = this;
+                formData.append("parentUUID", animeUUID);
+                this.$http.post("http://localhost:9001/selectChapterInfoByParent", formData).then(function (response) {
+                    console.log(animeUUID,":",response.data);
+                    _this.chapterInfoList.push(response.data);
+                    console.log("插了一个章节信息");
+                });
             },
             /**
              * 通过搜索内容查询动漫信息的数量并设置最大页面数

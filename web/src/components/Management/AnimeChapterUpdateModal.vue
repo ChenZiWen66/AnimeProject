@@ -77,6 +77,7 @@
     import {globalBus} from "../GlobalBus";
     import AliPlayerManage from "./AliPlayerManage";
     import OSSFileUtils from "../utils/OSSFileUtils";
+    import ChapterInfoUtils from "../utils/ChapterInfoUtils";
 
     export default {
         name: "AnimeChapterUpdateModel",
@@ -110,8 +111,8 @@
                 _this.chapter_video_src = chapterInfo.chapter_video_src;
                 _this.chapter_cover_src = chapterInfo.chapter_cover_src;
                 _this.anime_name = chapterInfo.anime_name;
-                console.log("封面路径", _this.chapter_cover_src);
-                console.log("视频路径", _this.chapter_video_src);
+                // console.log("封面路径", _this.chapter_cover_src);
+                // console.log("视频路径", _this.chapter_video_src);
                 _this.$refs.player2.addPlayer(_this.chapter_name, _this.chapter_cover_src, _this.chapter_video_src);
             })
         },
@@ -165,20 +166,15 @@
                 let chapterDir = _this.chapter_video_src.substring(0, _this.chapter_video_src.lastIndexOf("/"));
                 console.log("将要删除文件夹，", chapterDir);
                 OSSFileUtils.deleteOSSFile(chapterDir);
-
                 //删除剧集数据库信息
-                let formData_deleteInfo = new window.FormData();
-                console.log("删除数据库信息,id=", _this.chapter_id);
-                formData_deleteInfo.append("id", _this.chapter_id);
-                try {
-                    _this.$http.post("http://localhost:9001/deleteChapterInfo", formData_deleteInfo).then(function (response) {
-                        console.log("删除信息成功");
-                    })
-                } catch (e) {
-                    console.log("删除信息失败");
-                }
+                ChapterInfoUtils.deleteChapterInfo(_this.chapter_id);
                 this.initChapterInfoModal();
             },
+
+            /**
+             * 点击确认修改后触发的事件
+             * @returns {Promise<void>}
+             */
             async submitUpdate() {
                 this.$refs.player2.deletePlayer();
                 let _this = this;
@@ -206,20 +202,7 @@
                 } else {
                     videoOSS_URL = _this.chapter_video_src;
                 }
-                let formData = new window.FormData();
-                formData.append("id", _this.chapter_id);
-                formData.append("chapter_name", _this.chapter_name);
-                formData.append("chapter_video_src", videoOSS_URL);
-                formData.append("chapter_cover_src", coverOSS_URL);
-                formData.append("parent", _this.chapter_parent);
-                formData.append("uuid", _this.chapter_uuid);
-                try {
-                    _this.$http.post("http://localhost:9001/updateChapterInfo", formData).then(function (response) {
-                        console.log("更新章节信息成功");
-                    })
-                } catch (e) {
-                    console.log("更新章节信息失败");
-                }
+                await ChapterInfoUtils.updateChapterInfo(_this.chapter_id, _this.chapter_name, coverOSS_URL, videoOSS_URL, _this.chapter_parent, _this.chapter_uuid);
                 this.initChapterInfoModal();
             },
 

@@ -161,18 +161,10 @@
             deleteChapter() {
                 let _this = this;
                 this.$refs.player2.deletePlayer();
-                let formData_deleteDOC = new window.FormData();
                 //获取剧集文件夹路径
                 let chapterDir = _this.chapter_video_src.substring(0, _this.chapter_video_src.lastIndexOf("/"));
                 console.log("将要删除文件夹，", chapterDir);
-                formData_deleteDOC.append("src", chapterDir);
-                try {
-                    _this.$http.post("http://localhost:9002/deleteOSSFile", formData_deleteDOC).then(function (response) {
-                        console.log("删除文件成功");
-                    });
-                } catch (e) {
-                    console.log("删除文件失败");
-                }
+                OSSFileUtils.deleteOSSFile(chapterDir);
 
                 //删除剧集数据库信息
                 let formData_deleteInfo = new window.FormData();

@@ -4,8 +4,8 @@
         <div class="col-md-6 statisticsContent" id="container2" style="height: 50vh"></div>
         <div class="col-md-6 statisticsContent" id="container3" style="height: 50vh"></div>
         <div class="col-md-6 statisticsContent" id="container4" style="background-color: lightgreen;height: 50vh">
-            <h3>一共有1000个动漫</h3>
-            <h3>一共有10000个集</h3>
+            <h3>一共有{{animeCount}}个动漫</h3>
+            <h3>总共有{{chapterCount}}集</h3>
         </div>
     </div>
 </template>
@@ -106,7 +106,9 @@
                             ['标签5', 6.2],
                             ['标签6', 0.7]
                         ]
-                    }]]
+                    }]],
+                animeCount:0,//动漫数量
+                chapterCount:0,//剧集数量
             }
         },
         mounted() {
@@ -131,6 +133,22 @@
             json3.series = this.series[2];
             json3.plotOptions = this.plotOptions;
             $('#container3').highcharts(json3);
+            this.initCountInfo();
+        },
+        methods:{
+            initCountInfo(){
+                let _this = this;
+                let formData = new window.FormData();
+                formData.append("anime_type","");
+                formData.append("anime_zone","");
+                formData.append("anime_tag","");
+                this.$http.post("http://localhost:9001/getAnimeInfoCountByAttribute",formData).then(function (response) {
+                    _this.animeCount = response.data.animeInfoCount;
+                });
+                this.$http.get("http://localhost:9001/getChapterInfoCount").then(function (response) {
+                    _this.chapterCount = response.data.chapterInfoCount;
+                });
+            }
         }
     }
 </script>

@@ -45,14 +45,17 @@
                                 <AliPlayerManage ref="player"/>
                             </div>
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-danger">删除这一集</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                        @click="deleteChapter">删除这一集
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" @click="closeModal">取消
                         </button>
-                        <button type="button" class="btn btn-primary">确认修改</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" @click="submitUpdate">确认修改
+                        </button>
                     </div>
                 </div>
             </div>
@@ -97,15 +100,47 @@
                 _this.chapter_video_src = chapterInfo.chapter_video_src;
                 _this.chapter_cover_src = chapterInfo.chapter_cover_src;
                 _this.anime_name = chapterInfo.anime_name;
-                console.log("封面路径",_this.chapter_cover_src);
-                console.log("视频路径",_this.chapter_video_src);
+                console.log("封面路径", _this.chapter_cover_src);
+                console.log("视频路径", _this.chapter_video_src);
                 _this.$refs.player.addPlayer(_this.chapter_name, _this.chapter_cover_src, _this.chapter_video_src);
             })
         },
         methods: {
             closeModal() {
                 this.$refs.player.deletePlayer();
-            }
+            },
+            deleteChapter() {
+                let _this = this;
+                this.$refs.player.deletePlayer();
+                let formData_deleteDOC = new window.FormData();
+                //获取剧集文件夹路径
+                let chapterDir = _this.chapter_video_src.substring(0, _this.chapter_video_src.lastIndexOf("/"));
+                console.log("将要删除文件夹，", chapterDir);
+                formData_deleteDOC.append("src", chapterDir);
+                try {
+                    _this.$http.post("http://localhost:9002/deleteOSSFile", formData_deleteDOC).then(function (response) {
+                        console.log("删除文件成功");
+                    });
+                } catch (e) {
+                    console.log("删除文件失败");
+                }
+
+                //删除剧集数据库信息
+                let formData_deleteInfo = new window.FormData();
+                console.log("删除数据库信息,id=", _this.chapter_id);
+                formData_deleteInfo.append("id", _this.chapter_id);
+                try {
+                    _this.$http.post("http://localhost:9001/deleteChapterInfo", formData_deleteInfo).then(function (response) {
+                        console.log("删除信息成功");
+                    })
+                } catch (e) {
+                    console.log("删除信息失败");
+                }
+            },
+            submitUpdate() {
+                this.$refs.player.deletePlayer();
+
+            },
         }
     }
 </script>

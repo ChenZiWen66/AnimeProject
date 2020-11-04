@@ -17,7 +17,6 @@
                 //    1.在template中加上<div class="prism-player" id="J_prismPlayer"/>
                 //    2.新建一个Aliplayer
                 //    第一步:
-                console.log("111111111");
                 let _this = this;
                 if (_this.player) {
                     _this.Player = null;
@@ -25,13 +24,11 @@
                     _this.$refs.ali.innerHTML='';
                 }
 
-                console.log("222222222");
                 let txt3 = document.createElement("div");
                 txt3.setAttribute('class', 'prism-player');
                 txt3.setAttribute('id', videotitle + '-player');
                 // document.querySelector(".aliPlayer").append(txt3);
                 _this.$refs.ali.append(txt3);
-                console.log("333333333");
                 _this.player = new Aliplayer({
                     id: videotitle + '-player',
                     width: '100%',
@@ -40,7 +37,6 @@
                     source: videourl,
                     cover: coverurl
                 });
-                console.log("44444444");
             },
             deletePlayer() {
                 let _this = this;

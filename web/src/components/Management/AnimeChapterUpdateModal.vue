@@ -33,7 +33,8 @@
                             <div class="form-group">
                                 <label for="uploadChapterCover" class="col-md-3 control-label">修改封面</label>
                                 <div class="col-md-9">
-                                    <input type="file" id="uploadChapterCover">
+                                    <input type="file" id="uploadChapterCover" @change="changeCover"
+                                           ref="ChapterCoverInput">
                                 </div>
                                 <p class="help-block col-md-12">点击按钮修改章节封面</p>
                                 <div class="col-md-12">
@@ -41,8 +42,16 @@
 
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="uploadChapterVideo" class="col-md-12 control-label">修改视频</label>
+                                <div class="col-md-12">
+                                    <input type="file" id="uploadChapterVideo" @change="changeVideo"
+                                           ref="ChapterVideoInput">
+                                </div>
+                                <p class="help-block col-md-12">点击按钮修改剧集视频</p>
+                            </div>
                             <div class="col-md-12">
-                                <AliPlayerManage ref="player"/>
+                                <AliPlayerManage ref="player2"/>
                             </div>
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal"
@@ -102,16 +111,40 @@
                 _this.anime_name = chapterInfo.anime_name;
                 console.log("封面路径", _this.chapter_cover_src);
                 console.log("视频路径", _this.chapter_video_src);
-                _this.$refs.player.addPlayer(_this.chapter_name, _this.chapter_cover_src, _this.chapter_video_src);
+                _this.$refs.player2.addPlayer(_this.chapter_name, _this.chapter_cover_src, _this.chapter_video_src);
             })
         },
         methods: {
+            changeVideo() {
+                let _this = this;
+                _this.changed_video = true;
+                let file = _this.$refs.ChapterVideoInput.files[0];
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = function () {
+                    console.log("即将播放视频");
+                    _this.chapter_video_src = this.result;
+                    _this.$refs.player2.addPlayer(_this.chapter_name, _this.chapter_cover_src, _this.chapter_video_src);
+                };
+            },
+            changeCover() {
+                let _this = this;
+                _this.changed_cover = true;
+                let file = _this.$refs.ChapterCoverInput.files[0];
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = function () {
+                    console.log("修改了封面");
+                    _this.chapter_cover_src = this.result;
+                    _this.$refs.player2.addPlayer(_this.chapter_name, _this.chapter_cover_src, _this.chapter_video_src);
+                };
+            },
             closeModal() {
-                this.$refs.player.deletePlayer();
+                this.$refs.player2.deletePlayer();
             },
             deleteChapter() {
                 let _this = this;
-                this.$refs.player.deletePlayer();
+                this.$refs.player2.deletePlayer();
                 let formData_deleteDOC = new window.FormData();
                 //获取剧集文件夹路径
                 let chapterDir = _this.chapter_video_src.substring(0, _this.chapter_video_src.lastIndexOf("/"));
@@ -138,8 +171,53 @@
                 }
             },
             submitUpdate() {
-                this.$refs.player.deletePlayer();
-
+                this.$refs.player2.deletePlayer();
+                let _this = this;
+                let coverOSS_URL;
+                let videoOSS_URL;
+                if (_this.changed_cover) {
+                    console.log("修改了章节封面，将要上传");
+                    let cover_file = _this.$refs.ChapterCoverInput.files[0];
+                    let cover_file_name = cover_file.name;//文件名
+                    let cover_type = cover_file_name.substring(cover_file_name.lastIndexOf("."));//后缀
+                    coverOSS_URL = _this.upLoadFile2OSS(cover_file, _this.chapter_parent + '/' + _this.chapter_uuid + '/cover' + cover_type);
+                } else {
+                    coverOSS_URL = _this.chapter_cover_src;
+                }
+                if (_this.changed_video) {
+                    console.log("修改了章节视频，将要上传");
+                    let video_file = _this.$refs.ChapterCoverInput.files[0];
+                    let video_file_name = video_file.name;//文件名
+                    let video_type = video_file_name.substring(video_file_name.lastIndexOf("."));//后缀
+                    videoOSS_URL = _this.upLoadFile2OSS(video_file, _this.chapter_parent + '/' + _this.chapter_uuid + '/video' + video_type);
+                } else {
+                    videoOSS_URL = _this.chapter_video_src;
+                }
+                let formData = new window.FormData();
+                formData.append("id", _this.chapter_id);
+                formData.append("chapter_name", _this.chapter_name);
+                formData.append("chapter_video_src", videoOSS_URL);
+                formData.append("chapter_cover_src", coverOSS_URL);
+                formData.append("parent", _this.chapter_parent);
+                formData.append("uuid", _this.chapter_uuid);
+                try {
+                    _this.$http.post("http://localhost:9001/updateChapterInfo", formData).then(function (response) {
+                        console.log("更新章节信息成功");
+                    })
+                }catch (e) {
+                    console.log("更新章节信息失败");
+                }
+            },
+            upLoadFile2OSS(file, oss_src) {
+                let _this = this;
+                let src;
+                let formData = new window.FormData();
+                formData.append("file", file);
+                formData.append("src", oss_src);
+                _this.$http.post("http://localhost:9002/uploadFile2OSS", formData).then(function (response) {
+                    src = response.data.fileUrl_OSS;
+                });
+                return src;
             },
         }
     }

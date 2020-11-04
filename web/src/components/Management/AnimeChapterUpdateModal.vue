@@ -115,6 +115,20 @@
             })
         },
         methods: {
+            initChapterInfoModal() {
+                let _this = this;
+                _this.chapter_id = '';
+                _this.chapter_name = '剧集名称';
+                _this.chapter_uuid = '';
+                _this.chapter_parent = '';
+                _this.chapter_video_src = 'https://czwhub.oss-cn-shanghai.aliyuncs.com/SEVENS%20014..mp4';
+                _this.chapter_cover_src = "https://czwhub.oss-cn-shanghai.aliyuncs.com/acc8fc48-7a32-4804-84e4-1eee1aebb2b6%E6%B8%B8%E6%88%8F%E7%8E%8B18%E9%9B%86%E5%9B%BE%E7%89%87.jpg";
+                _this.anime_name = '动漫名称';//动漫名称
+
+                //其他信息
+                _this.changed_cover = false;
+                _this.changed_video = false;
+            },
             changeVideo() {
                 let _this = this;
                 _this.changed_video = true;
@@ -141,6 +155,7 @@
             },
             closeModal() {
                 this.$refs.player2.deletePlayer();
+                this.initChapterInfoModal();
             },
             deleteChapter() {
                 let _this = this;
@@ -169,6 +184,7 @@
                 } catch (e) {
                     console.log("删除信息失败");
                 }
+                this.initChapterInfoModal();
             },
             submitUpdate() {
                 this.$refs.player2.deletePlayer();
@@ -204,9 +220,10 @@
                     _this.$http.post("http://localhost:9001/updateChapterInfo", formData).then(function (response) {
                         console.log("更新章节信息成功");
                     })
-                }catch (e) {
+                } catch (e) {
                     console.log("更新章节信息失败");
                 }
+                this.initChapterInfoModal();
             },
             upLoadFile2OSS(file, oss_src) {
                 let _this = this;

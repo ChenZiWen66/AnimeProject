@@ -87,7 +87,8 @@
                                 <div class="form-group">
                                     <label for="exampleInputFile" class="col-md-3 control-label">封面路径</label>
                                     <div class="col-md-9">
-                                        <input type="file" id="exampleInputFile">
+                                        <input type="file" id="exampleInputFile" @change="changeCover()"
+                                               ref="animeCoverInput">
                                         <p class="help-block">点击按钮上传图片</p>
                                     </div>
                                 </div>
@@ -160,6 +161,17 @@
             })
         },
         methods: {
+            changeCover() {
+                let _this = this;
+                _this.is_selectCover = true;
+                let file = _this.$refs.animeCoverInput.files[0];
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = function () {
+                    console.log("修改了动漫封面");
+                    _this.coverImgSrc = this.result;
+                };
+            },
             /**
              * 获取属性信息
              */
@@ -176,10 +188,20 @@
                 });
             },
             //点击修改按钮，开始执行修改功能
-            click_btn_confirmSubmit() {
+            async click_btn_confirmSubmit() {
                 let _this = this;
                 // 如果有修改动漫封面，那么将阿里云的图片封面替换成这个封面
-
+                let coverOSS_URL;
+                if (_this.is_selectCover) {
+                    let cover_file = _this.$refs.animeCoverInput.files[0];
+                    let cover_file_name = cover_file.name;//文件名
+                    let cover_type = cover_file_name.substring(cover_file_name.lastIndexOf("."));//后缀
+                    await _this.upLoadFile2OSS(cover_file, _this.anime_uuid + '/cover' + cover_type).then(function (response) {
+                        coverOSS_URL = response;
+                    });
+                } else {
+                    coverOSS_URL = _this.coverImgSrc;
+                }
                 // 创建表单，修改动漫信息数据
                 let formData = new FormData();
                 formData.append("id", _this.anime_id);
@@ -193,7 +215,7 @@
                 formData.append("anime_year", _this.animeYear_input);
                 formData.append("indexes", _this.animeIndex_input);
                 formData.append("update_info", _this.animeUpdateInfo_input);
-                formData.append("coverimg_src", _this.coverImgSrc);
+                formData.append("coverimg_src", coverOSS_URL);
 
                 try {
                     _this.$http.post("http://localhost:9001/updateAnimeInfo", formData).then(function (response) {
@@ -202,8 +224,19 @@
                 } catch (e) {
                     console.log("修改失败");
                 }
-
-            }
+            },
+            async upLoadFile2OSS(file, oss_src) {
+                let _this = this;
+                let src;
+                let formData = new window.FormData();
+                formData.append("file", file);
+                formData.append("src", oss_src);
+                await _this.$http.post("http://localhost:9002/uploadFile2OSS", formData).then(function (response) {
+                    src = response.data.fileUrl_OSS;
+                    console.log("返回结果src", src);
+                });
+                return src;
+            },
         }
     }
 </script>

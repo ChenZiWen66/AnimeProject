@@ -110,6 +110,7 @@
 
 <script>
     import {globalBus} from "../GlobalBus";
+    import OSSFileUtils from "../utils/OSSFileUtils";
 
     export default {
         name: "UpdateAnimeInfoModel",
@@ -196,7 +197,7 @@
                     let cover_file = _this.$refs.animeCoverInput.files[0];
                     let cover_file_name = cover_file.name;//文件名
                     let cover_type = cover_file_name.substring(cover_file_name.lastIndexOf("."));//后缀
-                    await _this.upLoadFile2OSS(cover_file, _this.anime_uuid + '/cover' + cover_type).then(function (response) {
+                    await OSSFileUtils.upLoadFile2OSS(cover_file, _this.anime_uuid + '/cover' + cover_type).then(function (response) {
                         coverOSS_URL = response;
                     });
                 } else {
@@ -224,18 +225,6 @@
                 } catch (e) {
                     console.log("修改失败");
                 }
-            },
-            async upLoadFile2OSS(file, oss_src) {
-                let _this = this;
-                let src;
-                let formData = new window.FormData();
-                formData.append("file", file);
-                formData.append("src", oss_src);
-                await _this.$http.post("http://localhost:9002/uploadFile2OSS", formData).then(function (response) {
-                    src = response.data.fileUrl_OSS;
-                    console.log("返回结果src", src);
-                });
-                return src;
             },
         }
     }

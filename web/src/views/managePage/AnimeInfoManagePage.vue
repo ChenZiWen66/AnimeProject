@@ -217,7 +217,7 @@
                         _this.getChapterInfoList(_this.animeInfoList[i].uuid, i);
                     }
                     // console.log("动漫信息", _this.animeInfoList);
-                    console.log("章节信息:", _this.chapterInfoList);
+                    // console.log("章节信息:", _this.chapterInfoList);
                 });
                 _this.searchMethod_is_Attribute = true;
             },

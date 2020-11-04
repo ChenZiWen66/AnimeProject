@@ -73,6 +73,7 @@
 <script>
     import {globalBus} from "../GlobalBus";
     import AliPlayerManage from "./AliPlayerManage";
+    import OSSFileUtils from "../utils/OSSFileUtils";
 
     export default {
         name: "AnimeChapterUploadModel",
@@ -153,12 +154,12 @@
                 let cover_file = document.querySelector("#chapterCover").files[0];
                 let cover_file_name = cover_file.name;//文件名
                 let cover_type = cover_file_name.substring(cover_file_name.lastIndexOf("."));//后缀
-                let coverOSS_URL = await _this.upLoadFile2OSS(cover_file, _this.anime_uuid + '/' + chapterUUID + '/cover' + cover_type);
+                let coverOSS_URL = await OSSFileUtils.upLoadFile2OSS(cover_file, _this.anime_uuid + '/' + chapterUUID + '/cover' + cover_type);
                 //上传章节视频
                 let video_file = document.querySelector("#chapterVideo").files[0];
                 let video_file_name = video_file.name;//文件名
                 let video_type = video_file_name.substring(video_file_name.lastIndexOf("."));//后缀
-                let videoOSS_URL = await _this.upLoadFile2OSS(video_file, _this.anime_uuid + '/' + chapterUUID + '/video' + video_type);
+                let videoOSS_URL = await OSSFileUtils.upLoadFile2OSS(video_file, _this.anime_uuid + '/' + chapterUUID + '/video' + video_type);
                 //上传信息
                 let formData = new window.FormData();
                 formData.append("chapter_name", _this.chapter_name);
@@ -174,18 +175,6 @@
                 } catch (e) {
                     console.log("上传失败");
                 }
-
-            },
-            async upLoadFile2OSS(file, oss_src) {
-                let _this = this;
-                let src;
-                let formData = new window.FormData();
-                formData.append("file", file);
-                formData.append("src", oss_src);
-                await _this.$http.post("http://localhost:9002/uploadFile2OSS", formData).then(function (response) {
-                    src = response.data.fileUrl_OSS;
-                });
-                return src;
             },
         }
     }

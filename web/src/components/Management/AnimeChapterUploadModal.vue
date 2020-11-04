@@ -74,6 +74,7 @@
     import {globalBus} from "../GlobalBus";
     import AliPlayerManage from "./AliPlayerManage";
     import OSSFileUtils from "../utils/OSSFileUtils";
+    import ChapterInfoUtils from "../utils/ChapterInfoUtils";
 
     export default {
         name: "AnimeChapterUploadModel",
@@ -130,8 +131,8 @@
                 reader.readAsDataURL(file);
                 reader.onloadend = function () {
                     console.log("即将播放视频");
-                    _this.chapter_video_src=this.result;
-                    _this.$refs.player1.addPlayer(_this.chapter_name,_this.chapter_cover_src,_this.chapter_video_src);
+                    _this.chapter_video_src = this.result;
+                    _this.$refs.player1.addPlayer(_this.chapter_name, _this.chapter_cover_src, _this.chapter_video_src);
                 };
 
             },
@@ -154,27 +155,28 @@
                 let cover_file = document.querySelector("#chapterCover").files[0];
                 let cover_file_name = cover_file.name;//文件名
                 let cover_type = cover_file_name.substring(cover_file_name.lastIndexOf("."));//后缀
-                let coverOSS_URL = await OSSFileUtils.upLoadFile2OSS(cover_file, _this.anime_uuid + '/' + chapterUUID + '/cover' + cover_type);
+                let coverOSS_URL;
+                await OSSFileUtils.upLoadFile2OSS(cover_file, _this.anime_uuid + '/' + chapterUUID + '/cover' + cover_type).then(function (response) {
+                    coverOSS_URL = response;
+                });
                 //上传章节视频
                 let video_file = document.querySelector("#chapterVideo").files[0];
                 let video_file_name = video_file.name;//文件名
                 let video_type = video_file_name.substring(video_file_name.lastIndexOf("."));//后缀
-                let videoOSS_URL = await OSSFileUtils.upLoadFile2OSS(video_file, _this.anime_uuid + '/' + chapterUUID + '/video' + video_type);
+                let videoOSS_URL;
+                await OSSFileUtils.upLoadFile2OSS(video_file, _this.anime_uuid + '/' + chapterUUID + '/video' + video_type).then(function (response) {
+                    videoOSS_URL = response;
+                });
                 //上传信息
-                let formData = new window.FormData();
-                formData.append("chapter_name", _this.chapter_name);
-                formData.append("chapter_video_src", videoOSS_URL);
-                formData.append("chapter_cover_src", coverOSS_URL);
-                formData.append("parent", _this.anime_uuid);
-                formData.append("uuid", chapterUUID);
-
-                try {
-                    this.$http.post("http://localhost:9001/insertChapterInfo", formData).then(function (response) {
+                console.log(coverOSS_URL);
+                console.log(videoOSS_URL);
+                await ChapterInfoUtils.insertChapterInfo(_this.chapter_name, coverOSS_URL, videoOSS_URL, _this.anime_uuid, chapterUUID).then(function (response) {
+                    if(response){
                         console.log("上传成功");
-                    });
-                } catch (e) {
-                    console.log("上传失败");
-                }
+                    }else {
+                        console.log("上传失败");
+                    }
+                });
             },
         }
     }

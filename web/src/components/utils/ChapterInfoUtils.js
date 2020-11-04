@@ -48,6 +48,33 @@ async function updateChapterInfo(id, chapter_name, chapter_cover_src, chapter_vi
     }
 }
 
+/**
+ * 添加章节的数据库信息
+ * @param chapter_name
+ * @param chapter_cover_src
+ * @param chapter_video_src
+ * @param parent
+ * @param uuid
+ * @returns {Promise<boolean>}
+ */
+async function insertChapterInfo(chapter_name,chapter_cover_src,chapter_video_src,parent,uuid) {
+    let formData = new window.FormData();
+    formData.append("chapter_name", chapter_name);
+    formData.append("chapter_video_src", chapter_video_src);
+    formData.append("chapter_cover_src", chapter_cover_src);
+    formData.append("parent", parent);
+    formData.append("uuid", uuid);
+    let is_success;
+    try {
+        await axios.post("http://localhost:9001/insertChapterInfo", formData).then(function (response) {
+            is_success=true;
+        });
+    } catch (e) {
+        is_success=false;
+    }
+    return is_success;
+}
+
 export default {
-    deleteChapterInfo, updateChapterInfo
+    deleteChapterInfo, updateChapterInfo,insertChapterInfo
 }

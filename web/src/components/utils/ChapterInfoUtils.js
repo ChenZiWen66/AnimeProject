@@ -75,6 +75,21 @@ async function insertChapterInfo(chapter_name,chapter_cover_src,chapter_video_sr
     return is_success;
 }
 
+/**
+ * 通过输入动漫的UUID来查询章节信息
+ * @param parentUUID
+ * @returns {Promise<*>}
+ */
+async function selectChapterInfoByParent(parentUUID) {
+    let formData = new FormData();
+    formData.append("parentUUID", parentUUID);
+    let result;
+    await axios.post("http://localhost:9001/selectChapterInfoByParent", formData).then(function (response) {
+        result=response.data;
+    });
+    return result;
+}
+
 export default {
-    deleteChapterInfo, updateChapterInfo,insertChapterInfo
+    deleteChapterInfo, updateChapterInfo,insertChapterInfo,selectChapterInfoByParent
 }

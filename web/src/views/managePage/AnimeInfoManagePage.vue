@@ -107,6 +107,8 @@
     import AnimeChapterUploadModel from "../../components/Management/AnimeChapterUploadModal";
     import UpdateAnimeInfoModel from "../../components/Management/UpdateAnimeInfoModal";
     import {globalBus} from "../../components/GlobalBus";
+    import AnimeInfoUtils from "../../components/utils/AnimeInfoUtils";
+    import ChapterInfoUtils from "../../components/utils/ChapterInfoUtils";
 
     export default {
         name: "AnimeInfoManagePage",
@@ -188,79 +190,59 @@
             /**
              * 通过属性查询动漫信息的数量并设置最大页面数
              */
-            getAnimeInfo_maxPage_ByAttribute() {
+            async getAnimeInfo_maxPage_ByAttribute() {
                 let _this = this;
-                let formData = new window.FormData();
-                formData.append("anime_type", _this.selected_type);
-                formData.append("anime_tag", _this.selected_tag);
-                formData.append("anime_zone", _this.selected_zone);
-                this.$http.post("http://localhost:9001/getAnimeInfoCountByAttribute", formData).then(function (response) {
-                    _this.max_page = Math.ceil(response.data.animeInfoCount / _this.page_capacity);
-                    globalBus.$emit('PaginationMaxPage', _this.max_page);
-                })
+                AnimeInfoUtils.getAnimeInfoCountByAttribute(_this.selected_type, _this.selected_tag, _this.selected_zone).then(
+                    function (response) {
+                        _this.max_page = Math.ceil(response / _this.page_capacity);
+                        globalBus.$emit('PaginationMaxPage', _this.max_page);
+                    }
+                );
             },
             /**
              * 通过属性查询动漫信息
              */
-            getAnimeInfoListByAttribute() {
-                // console.log("开始查询信息");
+            async getAnimeInfoListByAttribute() {
                 let _this = this;
-                let formData = new window.FormData();
-                formData.append("anime_type", _this.selected_type);
-                formData.append("anime_tag", _this.selected_tag);
-                formData.append("anime_zone", _this.selected_zone);
-                formData.append("current_page", _this.current_page);
-                formData.append("page_capacity", _this.page_capacity);
-                this.$http.post("http://localhost:9001/selectAnimeInfoByAttribute", formData).then(function (response) {
-                    _this.animeInfoList = response.data;
+                await AnimeInfoUtils.selectAnimeInfoByAttribute(_this.selected_type, _this.selected_tag, _this.selected_zone, _this.current_page, _this.page_capacity).then(function (response) {
+                    _this.animeInfoList = response;
                     for (let i = 0; i < _this.animeInfoList.length; i++) {
                         _this.getChapterInfoList(_this.animeInfoList[i].uuid, i);
                     }
-                    // console.log("动漫信息", _this.animeInfoList);
-                    // console.log("章节信息:", _this.chapterInfoList);
+                    _this.searchMethod_is_Attribute = true;
                 });
-                _this.searchMethod_is_Attribute = true;
             },
 
             /**
              *通过动漫的UUID查询动漫剧集信息
              *
              */
-            getChapterInfoList(animeUUID, index) {
-                let formData = new FormData();
+            async getChapterInfoList(animeUUID, index) {
                 let _this = this;
-                formData.append("parentUUID", animeUUID);
-                this.$http.post("http://localhost:9001/selectChapterInfoByParent", formData).then(function (response) {
-                    // console.log(animeUUID, ":", response.data);
-                    _this.$set(_this.chapterInfoList, index, response.data);
-                    // console.log("插了一个章节信息,index=",index);
+                await ChapterInfoUtils.selectChapterInfoByParent(animeUUID).then(function (response) {
+                    _this.$set(_this.chapterInfoList, index, response);
                 });
             },
             /**
              * 通过搜索内容查询动漫信息的数量并设置最大页面数
              */
-            getAnimeInfo_maxPage_ByKeyword() {
+            async getAnimeInfo_maxPage_ByKeyword() {
                 let _this = this;
-                let formData = new window.FormData();
-                formData.append("searchContent", _this.search_content);
-                this.$http.post("http://localhost:9001/getAnimeInfoCountByName", formData).then(function (response) {
-                    _this.max_page = Math.ceil(response.data.animeInfoCount / _this.page_capacity);
+                await AnimeInfoUtils.getAnimeInfoCountByName(_this.search_content).then(function (response) {
+                    _this.max_page = Math.ceil(response / _this.page_capacity);
                     globalBus.$emit('PaginationMaxPage', _this.max_page);
-                })
+                });
             },
+
             /**
              * 通过搜索内容查询动漫信息
              */
-            getAnimeInfoListByKeyword() {
+            async getAnimeInfoListByKeyword() {
                 let _this = this;
-                let formData = new window.FormData();
-                formData.append("searchContent", _this.search_content);
-                formData.append("current_page", _this.current_page);
-                formData.append("page_capacity", _this.page_capacity);
-                this.$http.post("http://localhost:9001/selectAnimeInfoByName", formData).then(function (response) {
-                    _this.animeInfoList = response.data;
+                await AnimeInfoUtils.selectAnimeInfoByName(_this.search_content, _this.current_page, _this.page_capacity).then(function (response) {
+                    _this.animeInfoList = response;
+                    _this.searchMethod_is_Attribute = false;
                 });
-                _this.searchMethod_is_Attribute = false;
             },
             /**
              * 点击了属性旁边的筛选按钮，开始根据属性查询
@@ -282,20 +264,20 @@
                 _this.getAnimeInfo_maxPage_ByKeyword();
                 _this.getAnimeInfoListByKeyword();
             },
-            doubleClickChapter(anime_index,chapterIndex) {
+            doubleClickChapter(anime_index, chapterIndex) {
                 console.log("双击了剧集Chapter，将更新剧集信息");
                 let _this = this;
                 let chapter_info = {
-                    chapter_id:_this.chapterInfoList[anime_index][chapterIndex].id,
-                    chapter_name:_this.chapterInfoList[anime_index][chapterIndex].chapter_name,
+                    chapter_id: _this.chapterInfoList[anime_index][chapterIndex].id,
+                    chapter_name: _this.chapterInfoList[anime_index][chapterIndex].chapter_name,
                     chapter_uuid: _this.chapterInfoList[anime_index][chapterIndex].uuid,
-                    chapter_parent:_this.chapterInfoList[anime_index][chapterIndex].parent,
-                    chapter_video_src:_this.chapterInfoList[anime_index][chapterIndex].chapter_video_src,
-                    chapter_cover_src:_this.chapterInfoList[anime_index][chapterIndex].chapter_cover_src,
-                    anime_name:_this.animeInfoList[anime_index].anime_name,//动漫名称
+                    chapter_parent: _this.chapterInfoList[anime_index][chapterIndex].parent,
+                    chapter_video_src: _this.chapterInfoList[anime_index][chapterIndex].chapter_video_src,
+                    chapter_cover_src: _this.chapterInfoList[anime_index][chapterIndex].chapter_cover_src,
+                    anime_name: _this.animeInfoList[anime_index].anime_name,//动漫名称
                 };
                 let chapter_info_Json = JSON.stringify(chapter_info);
-                globalBus.$emit("chapterInfo_2_UpdateModal",chapter_info_Json);
+                globalBus.$emit("chapterInfo_2_UpdateModal", chapter_info_Json);
                 $("#animeChapterUpdateModal").modal('show');
             },
             /**
@@ -336,7 +318,6 @@
                     coverImgSrc: _this.animeInfoList[i].coverimg_src//封面路径
                 };
                 let anime_info_Json = JSON.stringify(anime_info);
-                console.log(anime_info_Json);
                 globalBus.$emit("anime_info_Json", anime_info_Json);
             },
             /**

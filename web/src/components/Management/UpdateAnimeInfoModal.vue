@@ -111,6 +111,7 @@
 <script>
     import {globalBus} from "../GlobalBus";
     import OSSFileUtils from "../utils/OSSFileUtils";
+    import AnimeInfoUtils from "../utils/AnimeInfoUtils";
 
     export default {
         name: "UpdateAnimeInfoModel",
@@ -204,27 +205,13 @@
                     coverOSS_URL = _this.coverImgSrc;
                 }
                 // 创建表单，修改动漫信息数据
-                let formData = new FormData();
-                formData.append("id", _this.anime_id);
-                formData.append("uuid", _this.anime_uuid);
-                formData.append("anime_name", _this.animeName_input);
-                formData.append("anime_type", _this.type_input.toString());
-                formData.append("anime_zone", _this.zone_input.toString());
-                formData.append("anime_tag", _this.tag_input.toString());
-                formData.append("anime_describe", _this.anime_describe_input);
-                formData.append("alias", _this.alias_input);
-                formData.append("anime_year", _this.animeYear_input);
-                formData.append("indexes", _this.animeIndex_input);
-                formData.append("update_info", _this.animeUpdateInfo_input);
-                formData.append("coverimg_src", coverOSS_URL);
-
-                try {
-                    _this.$http.post("http://localhost:9001/updateAnimeInfo", formData).then(function (response) {
-                        console.log("修改成功")
-                    })
-                } catch (e) {
-                    console.log("修改失败");
-                }
+                await AnimeInfoUtils.updateAnimeInfo(_this.anime_id, _this.anime_uuid, _this.animeName_input, _this.type_input.toString(), _this.zone_input.toString(), _this.tag_input.toString(), _this.anime_describe_input, _this.alias_input, _this.animeYear_input, _this.animeIndex_input, _this.animeUpdateInfo_input, coverOSS_URL).then(function (response) {
+                    if (response) {
+                        console.log("修改动漫信息成功");
+                    } else {
+                        console.log("修改动漫信息失败");
+                    }
+                });
             },
         }
     }

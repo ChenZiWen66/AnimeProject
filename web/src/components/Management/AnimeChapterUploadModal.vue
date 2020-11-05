@@ -168,8 +168,6 @@
                     videoOSS_URL = response;
                 });
                 //上传信息
-                console.log(coverOSS_URL);
-                console.log(videoOSS_URL);
                 await ChapterInfoUtils.insertChapterInfo(_this.chapter_name, coverOSS_URL, videoOSS_URL, _this.anime_uuid, chapterUUID).then(function (response) {
                     if(response){
                         console.log("上传成功");
